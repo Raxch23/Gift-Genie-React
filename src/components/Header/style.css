@@ -1,0 +1,16 @@
+header div {
+width: 70%;
+    background-color: white;
+    margin: 0 auto;
+    height: 100%;
+    border-bottom: 3px solid var(--textMain);
+
+}
+
+header{
+    background-color: var(--textMain);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: 20vh;
+}
