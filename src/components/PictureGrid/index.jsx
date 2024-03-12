@@ -4,8 +4,8 @@ const PictureGrid = ({ pictureArray }) => {
   console.log(pictureArray);
   return (
     <div>
-      {pictureArray.map((picture) => (
-        <PictureCard key={picture.id} picture={picture}  />
+      {pictureArray.map((picture,index) => (
+        <PictureCard key={index} picture={picture}  />
       ))}
     </div>
   );

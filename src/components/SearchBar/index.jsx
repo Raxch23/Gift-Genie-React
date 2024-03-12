@@ -12,9 +12,9 @@ const SearchBar = ({handleInputChange, searchTerm}) => {
         onChange={handleInputChange}
         value={searchTerm}
       />
-      {/* <button type="button" id="Search-btn" className="btn" onClick={handleClick} >
+      <button type="button" id="Search-btn" className="btn" onClick={handleClick} >
         <FontAwesomeIcon icon={faSearch} />
-      </button> */}
+      </button>
     </div>
   );
 };
