@@ -1,8 +1,12 @@
 const Main=()=>{
     return (
         <main className="row" style={{border:"1px solid black"}}>
-            <h3>Main Container</h3>
-
+            <div className="col-4"> 
+            <h3>left side</h3>
+            </div>
+            <div className="col-8">
+            <h3>right side</h3>
+            </div>
         </main>
     )
 }
