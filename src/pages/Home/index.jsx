@@ -1,20 +1,20 @@
-const appId = "566894";
-const accessKey = "yWH9hjEhFXjQhvtQPA8HDnyVzi_ocqp0JvHQDdzE9jA";
-const secretKey = "tLxOXBxVmBk3PeUzYuiAhr1MWH-HTTy3Crg4fIDaax8";
+import keys from "../../keys/unsplash.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-import PictureGrid from "../../components/PictureGrid/index.jsx";
+import UnsplashPictureGrid from "../../components/UnsplashPictureGrid/index.jsx";
+import PexelPictureGrid from "../../components/PexelPictureGrid/index.jsx";
 import Button from "react-bootstrap/Button";
 import pexelsApi from "../../utils/pexelsAPI.js";
 const Home = () => {
-  const [pictureArray, setPictureArray] = useState([{}]);
+  const [unsplashPictureArray, setUnsplashPictureArray] = useState([{}]);
+  const [pexelPictureArray, setPexelPictureArray] = useState([{}]);
   const [searchTerm, setSearchTerm] = useState("");
   const handleInputChange = (event) => {
     // console.log(event.target.value);
     setSearchTerm(event.target.value);
   };
-  async function handleSubmit(e) {
+  async function unsplashHandleSubmit(e) {
     e.preventDefault();
     console.log(searchTerm);
     if (!searchTerm) {
@@ -25,11 +25,10 @@ const Home = () => {
         "https://api.unsplash.com/search/photos?page=1&query=" +
           searchTerm +
           "&orientation=portrait&client_id=" +
-          accessKey
+          keys.accessKey
       );
       const data = await response.json();
-      setPictureArray(data.results);
-      console.log(pictureArray);
+      setUnsplashPictureArray(data.results);
     } catch (error) {
       console.log(error);
     }
@@ -46,19 +45,20 @@ const Home = () => {
       const response = await pexelsApi.get("/v1/search", {
         params: {
           query: searchTerm,
+          per_page: 80,
         },
       });
-      console.log(response.data.photos)
+
+      setPexelPictureArray(response.data.photos);
     } catch (error) {
       console.log(error);
     }
   }
-  console.log(pictureArray);
   return (
     <main className="row" style={{ border: "1px solid black" }}>
       <div className="col-4">
         <h3>Search for an Image</h3>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={unsplashHandleSubmit}>
           <input
             type="text"
             id="Search-term"
@@ -75,8 +75,13 @@ const Home = () => {
         <Button type="button" onClick={pexelSearch}>
           Search with Pexel
         </Button>
-        {pictureArray.length === 10 ? (
-          <PictureGrid pictureArray={pictureArray} />
+        {unsplashPictureArray.length === 10 ? (
+          <UnsplashPictureGrid unsplashPictureArray={unsplashPictureArray} />
+        ) : (
+          <h3>error</h3>
+        )}
+        {pexelPictureArray.length === 80 ? (
+          <PexelPictureGrid pexelPictureArray={pexelPictureArray} />
         ) : (
           <h3>error</h3>
         )}
