@@ -10,6 +10,7 @@ const Home = () => {
   const [unsplashPictureArray, setUnsplashPictureArray] = useState([{}]);
   const [pexelPictureArray, setPexelPictureArray] = useState([{}]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [page,setPage]=useState(1)
   const handleInputChange = (event) => {
     // console.log(event.target.value);
     setSearchTerm(event.target.value);
@@ -45,7 +46,10 @@ const Home = () => {
       const response = await pexelsApi.get("/v1/search", {
         params: {
           query: searchTerm,
-          per_page: 80,
+          per_page:10,
+          total_results:80,
+          orientation:"landscape",
+          page
         },
       });
 
@@ -54,8 +58,11 @@ const Home = () => {
       console.log(error);
     }
   }
+  const handlePageChange=(e)=>{
+    setPage(e.target.value)
+  }
   return (
-    <main className="row" style={{ border: "1px solid black" }}>
+    <main className="row">
       <div className="col-4">
         <h3>Search for an Image</h3>
         <form onSubmit={unsplashHandleSubmit}>
@@ -69,19 +76,22 @@ const Home = () => {
             <FontAwesomeIcon icon={faSearch} />
           </button>
         </form>
-      </div>
-      <div className="col-8">
-        <h3>Select your Image</h3>
         <Button type="button" onClick={pexelSearch}>
           Search with Pexel
         </Button>
+      </div>
+      <div className="col-8">
+        <h3>Select your Image</h3>
+
         {unsplashPictureArray.length === 10 ? (
           <UnsplashPictureGrid unsplashPictureArray={unsplashPictureArray} />
         ) : (
           <h3>error</h3>
         )}
-        {pexelPictureArray.length === 80 ? (
-          <PexelPictureGrid pexelPictureArray={pexelPictureArray} />
+      </div>
+      <div className="row">
+        {pexelPictureArray.length === 10 ? (
+          <PexelPictureGrid pexelPictureArray={pexelPictureArray} page={page} handlePageChange={handlePageChange} />
         ) : (
           <h3>error</h3>
         )}
