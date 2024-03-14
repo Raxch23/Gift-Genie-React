@@ -1,17 +1,17 @@
 import PexelPictureCard from "../PexelPictureCard";
 import Pagination from "react-bootstrap/Pagination";
-
-const PexelPictureGrid = ({ pexelPictureArray, page, handlePageChange}) => {
-  let active = 2;
+import{useState} from "react";
+const PexelPictureGrid = ({ pexelPictureArray,page,handlePageClick, active}) => {
+  // console.log(active)
   let items = [];
-  for (let number = 1; number <= 5; number++) {
+  for (let number = 1; number <= 8; number++) {
     items.push(
-      <Pagination.Item key={number} active={number === active}>
+      <Pagination.Item key={number} value={number} active={number === active} >
         {number}
       </Pagination.Item>
     );
   }
-
+// console.log(page)
   return (
     <div
       className="col-12"
@@ -25,7 +25,7 @@ const PexelPictureGrid = ({ pexelPictureArray, page, handlePageChange}) => {
         <PexelPictureCard key={index} picture={picture} />
       ))}
       <div>
-        <Pagination value={page} onClick={handlePageChange} >{items}</Pagination>
+        <Pagination onClick={handlePageClick}>{items}</Pagination>
         <br />
       </div>
     </div>

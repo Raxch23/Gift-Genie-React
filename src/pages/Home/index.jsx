@@ -6,14 +6,26 @@ import UnsplashPictureGrid from "../../components/UnsplashPictureGrid/index.jsx"
 import PexelPictureGrid from "../../components/PexelPictureGrid/index.jsx";
 import Button from "react-bootstrap/Button";
 import pexelsApi from "../../utils/pexelsAPI.js";
+
 const Home = () => {
   const [unsplashPictureArray, setUnsplashPictureArray] = useState([{}]);
   const [pexelPictureArray, setPexelPictureArray] = useState([{}]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [page,setPage]=useState(1)
+  const [page, setPage] = useState(1);
+  const [active, setActive] = useState(1);
+
   const handleInputChange = (event) => {
     // console.log(event.target.value);
     setSearchTerm(event.target.value);
+  };
+  const handlePageClick = (event) => {
+    //at this point the value of page is the currently loaded page number
+    const targetPage = parseInt(event.target.innerText);
+    console.log(targetPage);
+    handlePageChange(targetPage);
+    // setPage(targetPage);
+    // setActive(targetPage);
+    // pexelSearch(page);
   };
   async function unsplashHandleSubmit(e) {
     e.preventDefault();
@@ -37,8 +49,8 @@ const Home = () => {
     // setPictureArray([{}])
   }
 
-  async function pexelSearch(e) {
-    console.log(searchTerm);
+  async function pexelSearch(page) {
+    console.log(page);
     if (!searchTerm) {
       return false;
     }
@@ -46,21 +58,22 @@ const Home = () => {
       const response = await pexelsApi.get("/v1/search", {
         params: {
           query: searchTerm,
-          per_page:10,
-          total_results:80,
-          orientation:"landscape",
-          page
+          per_page: 10,
+          total_results: 80,
+          orientation: "landscape",
+          page,
         },
       });
-
+      console.log(response.data.photos);
       setPexelPictureArray(response.data.photos);
     } catch (error) {
       console.log(error);
     }
   }
-  const handlePageChange=(e)=>{
-    setPage(e.target.value)
-  }
+  const handlePageChange = (page) => {
+    setPage(page);
+    pexelSearch(page)
+  };
   return (
     <main className="row">
       <div className="col-4">
@@ -76,7 +89,7 @@ const Home = () => {
             <FontAwesomeIcon icon={faSearch} />
           </button>
         </form>
-        <Button type="button" onClick={pexelSearch}>
+        <Button type="button" onClick={()=>pexelSearch(page)}>
           Search with Pexel
         </Button>
       </div>
@@ -91,7 +104,12 @@ const Home = () => {
       </div>
       <div className="row">
         {pexelPictureArray.length === 10 ? (
-          <PexelPictureGrid pexelPictureArray={pexelPictureArray} page={page} handlePageChange={handlePageChange} />
+          <PexelPictureGrid
+            pexelPictureArray={pexelPictureArray}
+            page={page}
+            handlePageClick={handlePageClick}
+            active={active}
+          />
         ) : (
           <h3>error</h3>
         )}
