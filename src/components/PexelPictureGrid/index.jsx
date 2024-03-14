@@ -2,7 +2,6 @@ import PexelPictureCard from "../PexelPictureCard";
 import Pagination from "react-bootstrap/Pagination";
 
 const PexelPictureGrid = ({ pexelPictureArray, page, handlePageChange}) => {
-  console.log(page)
   let active = 2;
   let items = [];
   for (let number = 1; number <= 5; number++) {
