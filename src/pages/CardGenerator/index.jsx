@@ -14,7 +14,9 @@ const CardGenerator = () => {
     sender_email: "",
     message: "",
   });
+
   const [cardObject, setCardObject] = useState({});
+  const [saveCardArray, setSaveCardArray]=useState([])
   // works
 
   const getSingleImage = async () => {
@@ -41,6 +43,7 @@ const CardGenerator = () => {
       sender_name: formData.sender_name,
       sender_email: formData.sender_email,
       message: formData.message,
+      pid
     });
     setFormData({
       recipient_name: "",
@@ -49,8 +52,13 @@ const CardGenerator = () => {
       sender_email: "",
       message: "",
     });
-    console.log(formData);
   };
+
+const handleImageSave=()=>{
+saveCardArray.push(cardObject)
+localStorage.setItem("saveCardArray", JSON.stringify(saveCardArray))
+window.location.href="/yourcards"
+}
 
   return (
     <main className="row" style={{ border: "1px solid black" }}>
@@ -123,6 +131,7 @@ const CardGenerator = () => {
             <Card.Img src={singlePicture} />
           </Card.Body>
         </Card>
+        <Button type="button" id="save-card" onClick={handleImageSave} >Save</Button>
       </div>
     </main>
   );
