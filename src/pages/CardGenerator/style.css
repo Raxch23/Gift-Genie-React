@@ -1,0 +1,27 @@
+#picture-div {
+    border: 3px solid green;
+    padding: 0;
+    position: relative;
+}
+
+#to-name{
+position: absolute;
+top:1em;
+left: 1em;
+}
+
+#card-message{
+position: absolute;
+top:50%;
+left: 50%;
+}
+
+#from-name{
+position: absolute;
+bottom:1em;
+right: 1em;
+}
+
+.card-body img {
+    width: 100%;
+}
