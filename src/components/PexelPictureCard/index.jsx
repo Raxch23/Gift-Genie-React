@@ -4,6 +4,7 @@ const handleImageSelect=(event)=>{
 const pexelID = event.target.getAttribute("data-pid");
 console.log(pexelID)
 localStorage.setItem("currentImage", pexelID)
+window.location.href="/cardGenerator"
 }
 
 

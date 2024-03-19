@@ -59,7 +59,6 @@ const Home = () => {
           page,
         },
       });
-      console.log(response.data.photos);
       setPexelPictureArray(response.data.photos);
     } catch (error) {
       console.log(error);
