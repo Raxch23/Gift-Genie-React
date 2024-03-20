@@ -6,25 +6,11 @@ import { jsPDF } from "jspdf";
 const YourCards = () => {
   const cardArray = JSON.parse(localStorage.getItem("saveCardArray"));
   console.log(cardArray);
-  const handlePictureDownload = (event) => {
+  const selectCard = (event) => {
     const pdfCard = document.getElementById("selectedImg");
-    console.log(pdfCard);
-    const htmlString = `<img src="https://images.pexels.com/photos/2531709/pexels-photo-2531709.jpeg"/>`;
-    const htmlFrame = `<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>YourCards</title>
-  </head>
-  <body>
-  ${htmlString}
-  </body>
-</html>`;
-    const doc = new jsPDF();
-    doc.text(htmlFrame, 10, 10);
-    doc.save("a4.pdf");
-    console.log(doc);
+    console.log(event.target.value);
+    localStorage.setItem("card-to-print", event.target.value);
+window.location.href="carddownload"
   };
 
   return (
@@ -47,7 +33,7 @@ const YourCards = () => {
               }}
             >
               <Card.Img src={card.imgSRC} alt="" />
-              <Button onClick={handlePictureDownload} type="button">
+              <Button onClick={selectCard}   value={card.pid} type="button">
                 Print
               </Button>
             </Card>
