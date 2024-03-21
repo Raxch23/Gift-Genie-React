@@ -18,6 +18,7 @@ const CardGenerator = () => {
     message: "",
     font: "",
     fontColor: "black",
+    fontSize: "",
   });
   const [validated] = useState(false);
   // set state for alert
@@ -54,6 +55,7 @@ const CardGenerator = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
+    console.log(formData.fontSize);
   };
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -62,9 +64,11 @@ const CardGenerator = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-// let pictureDiv=document.getElementById("picture-div")
-// pictureDiv.style.setProperty(--fontColor, fontColor)
-  document.querySelector(":root").style.setProperty('--fontColor', fontColor)
+    // let pictureDiv=document.getElementById("picture-div")
+    // pictureDiv.style.setProperty(--fontColor, fontColor)
+    document.querySelector(":root").style.setProperty("--fontColor", fontColor);
+    document.querySelector(":root").style.setProperty("--fontColor", fontColor);
+
     localStorage.setItem("message-form", JSON.stringify(formData));
     setCardObject({
       recipient_name: formData.recipient_name,
@@ -197,6 +201,15 @@ const CardGenerator = () => {
             <option value="notable">Notable</option>
             <option value="lobster">Lobster</option>
           </Form.Select>
+          <Form.Label>Font Size</Form.Label>
+          <Form.Range
+            min="12"
+            max="48"
+            name="fontSize"
+            value={formData.fontSize}
+            onChange={handleInputChange}
+          />
+
           <SketchPicker
             color={formData.formColor}
             onChangeComplete={handleChangeComplete}

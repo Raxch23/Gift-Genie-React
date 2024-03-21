@@ -46,4 +46,5 @@ font-family: Georgia, 'Times New Roman', Times, serif;
 
 #picture-div {
     color:var(--fontColor);
+    font-size: var(--fontSize);
 }
