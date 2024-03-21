@@ -1,7 +1,6 @@
 import Main from "../../components/Main/index.jsx";
 import "./style.css";
 import { Card, Button } from "react-bootstrap";
-import { jsPDF } from "jspdf";
 
 const YourCards = () => {
   const cardArray = JSON.parse(localStorage.getItem("saveCardArray"));

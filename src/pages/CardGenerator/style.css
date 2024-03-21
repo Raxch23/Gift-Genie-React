@@ -39,3 +39,11 @@ font-family: Georgia, 'Times New Roman', Times, serif;
 .notable {
     font-family: "Notable",sans-serif;
 }
+
+/* #to-name,#from-name, #card-message {
+    color: var(--fontColor);
+} */
+
+#picture-div {
+    color:var(--fontColor);
+}
