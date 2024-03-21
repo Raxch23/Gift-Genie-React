@@ -25,3 +25,17 @@ right: 1em;
 .card-body img {
     width: 100%;
 }
+.georgia {
+font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.tangerine {
+    font-family: "Tangerine", cursive;
+}
+
+.lobster {
+    font-family: "Lobster",cursive;
+}
+
+.notable {
+    font-family: "Notable",sans-serif;
+}

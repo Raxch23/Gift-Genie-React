@@ -4,16 +4,17 @@ import { Card, Form, Button, Alert } from "react-bootstrap";
 import pexelsApi from "../../utils/pexelsAPI.js";
 import "./style.css";
 
-
 const CardGenerator = () => {
   const pid = localStorage.getItem("currentImage");
   const [singlePicture, setSinglePicture] = useState("");
+  const [selectedFont, setSelectedFont]= useState("georgia")
   const [formData, setFormData] = useState({
     recipient_name: "",
     recipient_email: "",
     sender_name: "",
     sender_email: "",
     message: "",
+    font: "",
   });
   const [validated] = useState(false);
   // set state for alert
@@ -63,13 +64,18 @@ const CardGenerator = () => {
       message: formData.message,
       pid,
       imgSRC: singlePicture,
+      font: formData.font,
     });
+
+    setSelectedFont(formData.font)
+
     setFormData({
       recipient_name: "",
       recipient_email: "",
       sender_name: "",
       sender_email: "",
       message: "",
+      font:"",
     });
   };
 
@@ -170,13 +176,25 @@ const CardGenerator = () => {
               message is required!
             </Form.Control.Feedback>
           </Form.Group>
+
+          <Form.Select
+            name="font"
+            onChange={handleInputChange}
+            aria-label="Select Font"
+          >
+            <option>Select your font</option>
+            <option value="tangerine">Tangerine</option>
+            <option value="notable">Notable</option>
+            <option value="lobster">Lobster</option>
+          </Form.Select>
+
           <Button
             disabled={
               !(
-                formData.recipient_name&&
-                formData.recipient_email&&
-                formData.sender_name&&
-                formData.sender_email&&
+                formData.recipient_name &&
+                formData.recipient_email &&
+                formData.sender_name &&
+                formData.sender_email &&
                 formData.message
               )
             }
@@ -191,9 +209,9 @@ const CardGenerator = () => {
         <h3>Your Image</h3>
         <Card>
           <Card.Body id="picture-div">
-            <h5 id="to-name"> {cardObject.recipient_name} </h5>
-            <h5 id="card-message">{cardObject.message}</h5>
-            <h5 id="from-name"> {cardObject.sender_name} </h5>
+            <h5 className={selectedFont}  id="to-name"> {cardObject.recipient_name} </h5>
+            <h5  className={selectedFont} id="card-message">{cardObject.message}</h5>
+            <h5 className={selectedFont}  id="from-name"> {cardObject.sender_name} </h5>
             <Card.Img src={singlePicture} />
           </Card.Body>
         </Card>
