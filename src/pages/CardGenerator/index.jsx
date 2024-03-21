@@ -3,11 +3,13 @@ import Main from "../../components/Main/index.jsx";
 import { Card, Form, Button, Alert } from "react-bootstrap";
 import pexelsApi from "../../utils/pexelsAPI.js";
 import "./style.css";
+import { SketchPicker } from "react-color";
 
 const CardGenerator = () => {
   const pid = localStorage.getItem("currentImage");
   const [singlePicture, setSinglePicture] = useState("");
-  const [selectedFont, setSelectedFont]= useState("georgia")
+  const [selectedFont, setSelectedFont] = useState("georgia");
+  const [fontColor, setFontColor] = useState("black");
   const [formData, setFormData] = useState({
     recipient_name: "",
     recipient_email: "",
@@ -15,6 +17,7 @@ const CardGenerator = () => {
     sender_email: "",
     message: "",
     font: "",
+    fontColor: "black",
   });
   const [validated] = useState(false);
   // set state for alert
@@ -32,6 +35,10 @@ const CardGenerator = () => {
   //     setShowAlert(false);
   //   }
   // }, [error]);
+  const handleChangeComplete = (color) => {
+    setFontColor(color.hex);
+    console.log(fontColor);
+  };
 
   const getSingleImage = async () => {
     try {
@@ -55,6 +62,9 @@ const CardGenerator = () => {
       event.preventDefault();
       event.stopPropagation();
     }
+// let pictureDiv=document.getElementById("picture-div")
+// pictureDiv.style.setProperty(--fontColor, fontColor)
+  document.querySelector(":root").style.setProperty('--fontColor', fontColor)
     localStorage.setItem("message-form", JSON.stringify(formData));
     setCardObject({
       recipient_name: formData.recipient_name,
@@ -67,7 +77,7 @@ const CardGenerator = () => {
       font: formData.font,
     });
 
-    setSelectedFont(formData.font)
+    setSelectedFont(formData.font);
 
     setFormData({
       recipient_name: "",
@@ -75,7 +85,7 @@ const CardGenerator = () => {
       sender_name: "",
       sender_email: "",
       message: "",
-      font:"",
+      font: "",
     });
   };
 
@@ -187,7 +197,10 @@ const CardGenerator = () => {
             <option value="notable">Notable</option>
             <option value="lobster">Lobster</option>
           </Form.Select>
-
+          <SketchPicker
+            color={formData.formColor}
+            onChangeComplete={handleChangeComplete}
+          />
           <Button
             disabled={
               !(
@@ -209,9 +222,17 @@ const CardGenerator = () => {
         <h3>Your Image</h3>
         <Card>
           <Card.Body id="picture-div">
-            <h5 className={selectedFont}  id="to-name"> {cardObject.recipient_name} </h5>
-            <h5  className={selectedFont} id="card-message">{cardObject.message}</h5>
-            <h5 className={selectedFont}  id="from-name"> {cardObject.sender_name} </h5>
+            <h5 className={selectedFont} id="to-name">
+              {" "}
+              {cardObject.recipient_name}{" "}
+            </h5>
+            <h5 className={selectedFont} id="card-message">
+              {cardObject.message}
+            </h5>
+            <h5 className={selectedFont} id="from-name">
+              {" "}
+              {cardObject.sender_name}{" "}
+            </h5>
             <Card.Img src={singlePicture} />
           </Card.Body>
         </Card>

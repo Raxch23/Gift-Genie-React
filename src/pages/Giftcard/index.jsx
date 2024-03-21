@@ -1,4 +1,3 @@
-import fileDownload from "js-file-download";
 import { useState } from "react";
 import pexelsApi from "../../utils/pexelsAPI.js";
 import {Card,Button} from "react-bootstrap"
