@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import Main from "../../components/Main/index.jsx";
-import { Card, Form, Button, CardImg } from "react-bootstrap";
+import { Card, Form, Button, Alert } from "react-bootstrap";
 import pexelsApi from "../../utils/pexelsAPI.js";
 import "./style.css";
+
 
 const CardGenerator = () => {
   const pid = localStorage.getItem("currentImage");
@@ -14,10 +15,22 @@ const CardGenerator = () => {
     sender_email: "",
     message: "",
   });
+  const [validated] = useState(false);
+  // set state for alert
+  const [showAlert, setShowAlert] = useState(false);
 
   const [cardObject, setCardObject] = useState({});
-  const [saveCardArray, setSaveCardArray]=useState(JSON.parse(localStorage.getItem("saveCardArray"))||[])
+  const [saveCardArray, setSaveCardArray] = useState(
+    JSON.parse(localStorage.getItem("saveCardArray")) || []
+  );
   // works
+  // useEffect(() => {
+  //   if (error) {
+  //     setShowAlert(true);
+  //   } else {
+  //     setShowAlert(false);
+  //   }
+  // }, [error]);
 
   const getSingleImage = async () => {
     try {
@@ -36,6 +49,11 @@ const CardGenerator = () => {
   };
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
     localStorage.setItem("message-form", JSON.stringify(formData));
     setCardObject({
       recipient_name: formData.recipient_name,
@@ -44,7 +62,7 @@ const CardGenerator = () => {
       sender_email: formData.sender_email,
       message: formData.message,
       pid,
-      imgSRC:singlePicture
+      imgSRC: singlePicture,
     });
     setFormData({
       recipient_name: "",
@@ -55,19 +73,32 @@ const CardGenerator = () => {
     });
   };
 
-const handleImageSave=()=>{
-saveCardArray.push(cardObject)
-console.log(saveCardArray)
-setSaveCardArray(saveCardArray)
-localStorage.setItem("saveCardArray", JSON.stringify(saveCardArray))
-window.location.href="/yourcards"
-}
+  const handleImageSave = () => {
+    saveCardArray.push(cardObject);
+    console.log(saveCardArray);
+    setSaveCardArray(saveCardArray);
+    localStorage.setItem("saveCardArray", JSON.stringify(saveCardArray));
+    window.location.href = "/yourcards";
+  };
 
   return (
     <main className="row" style={{ border: "1px solid black" }}>
       <div className="col-4">
         <h3>left side</h3>
-        <Form onSubmit={handleFormSubmit} className="card">
+        <Form
+          noValidate
+          validated={validated}
+          onSubmit={handleFormSubmit}
+          className="card"
+        >
+          <Alert
+            dismissible
+            onClose={() => setShowAlert(false)}
+            show={showAlert}
+            variant="danger"
+          >
+            Something went wrong with your message!
+          </Alert>
           <Form.Group className="mb-3" controlId="recipient_name">
             <Form.Label>Recipient Name</Form.Label>
             <Form.Control
@@ -76,7 +107,11 @@ window.location.href="/yourcards"
               value={formData.recipient_name}
               name="recipient_name"
               onChange={handleInputChange}
+              required
             />
+            <Form.Control.Feedback type="invalid">
+              recipient name is required!
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3" controlId="recipient_email">
             <Form.Label>Recipient's Email Address</Form.Label>
@@ -86,7 +121,11 @@ window.location.href="/yourcards"
               value={formData.recipient_email}
               name="recipient_email"
               onChange={handleInputChange}
+              required
             />
+            <Form.Control.Feedback type="invalid">
+              recipient email is required!
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3" controlId="sender_name">
             <Form.Label>Sender Name</Form.Label>
@@ -96,7 +135,11 @@ window.location.href="/yourcards"
               value={formData.sender_name}
               name="sender_name"
               onChange={handleInputChange}
+              required
             />
+            <Form.Control.Feedback type="invalid">
+              sender name is required!
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3" controlId="sender_email">
             <Form.Label>Sender's Email Address</Form.Label>
@@ -106,7 +149,11 @@ window.location.href="/yourcards"
               value={formData.sender_email}
               name="sender_email"
               onChange={handleInputChange}
+              required
             />
+            <Form.Control.Feedback type="invalid">
+              sender email is required!
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3" controlId="message">
             <Form.Label>Message</Form.Label>
@@ -117,9 +164,25 @@ window.location.href="/yourcards"
               value={formData.message}
               name="message"
               onChange={handleInputChange}
+              required
             />
+            <Form.Control.Feedback type="invalid">
+              message is required!
+            </Form.Control.Feedback>
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button
+            disabled={
+              !(
+                formData.recipient_name&&
+                formData.recipient_email&&
+                formData.sender_name&&
+                formData.sender_email&&
+                formData.message
+              )
+            }
+            variant="primary"
+            type="submit"
+          >
             Submit
           </Button>
         </Form>
@@ -134,7 +197,9 @@ window.location.href="/yourcards"
             <Card.Img src={singlePicture} />
           </Card.Body>
         </Card>
-        <Button type="button" id="save-card" onClick={handleImageSave} >Save</Button>
+        <Button type="button" id="save-card" onClick={handleImageSave}>
+          Save
+        </Button>
       </div>
     </main>
   );
