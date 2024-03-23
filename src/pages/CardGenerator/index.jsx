@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Main from "../../components/Main/index.jsx";
 import { Card, Form, Button, Alert } from "react-bootstrap";
 import pexelsApi from "../../utils/pexelsAPI.js";
 import "./style.css";
@@ -9,17 +8,35 @@ const CardGenerator = () => {
   const pid = localStorage.getItem("currentImage");
   const [singlePicture, setSinglePicture] = useState("");
   const [selectedFont, setSelectedFont] = useState("georgia");
-  const [fontColor, setFontColor] = useState("black");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [sketchPickerColor, setSketchPickerColor] = useState({
+    r: "13",
+    g: "110",
+    b: "253",
+    a: "1", 
+  });
+
+
+  const [styleData, setStyleData] = useState({
+    font: "",
+    fontColor: "",
+    fontSize: "",
+  });
+
+
+const styles={
+  fontSize: styleData.fontSize, fontColor:styleData.fontColor, fontFamily:styleData.font
+}
+console.log(styles)
   const [formData, setFormData] = useState({
     recipient_name: "",
     recipient_email: "",
     sender_name: "",
     sender_email: "",
     message: "",
-    font: "",
-    fontColor: "black",
-    fontSize: "",
   });
+
+  console.log(styleData);
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
@@ -36,10 +53,6 @@ const CardGenerator = () => {
   //     setShowAlert(false);
   //   }
   // }, [error]);
-  const handleChangeComplete = (color) => {
-    setFontColor(color.hex);
-    console.log(fontColor);
-  };
 
   const getSingleImage = async () => {
     try {
@@ -55,7 +68,28 @@ const CardGenerator = () => {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
-    console.log(formData.fontSize);
+  };
+  const handleColorChange = (event) => {
+    setSelectedColor(
+      `rgba(${sketchPickerColor.r},${sketchPickerColor.g},${sketchPickerColor.b},${sketchPickerColor.a})`
+    );
+    setStyleData({ ...styleData, ["fontColor"]: selectedColor });
+    setSketchPickerColor({
+      r: event.rgb.r.toString(),
+      g: event.rgb.g.toString(),
+      b: event.rgb.b.toString(),
+      a: event.rgb.a.toString(),
+    });
+
+    console.log(styleData)
+  };
+  const handleStyleChange = (event) => {
+    const { name, value } = event.target;
+
+    setStyleData({ ...styleData, [name]: value });
+    setSelectedFont(styleData.font);
+    // document.querySelector(".card-text").style.setProperty("--fontFamily",selectedFont)
+    console.log(styleData)
   };
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -64,10 +98,6 @@ const CardGenerator = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-    // let pictureDiv=document.getElementById("picture-div")
-    // pictureDiv.style.setProperty(--fontColor, fontColor)
-    document.querySelector(":root").style.setProperty("--fontColor", fontColor);
-    document.querySelector(":root").style.setProperty("--fontColor", fontColor);
 
     localStorage.setItem("message-form", JSON.stringify(formData));
     setCardObject({
@@ -80,8 +110,6 @@ const CardGenerator = () => {
       imgSRC: singlePicture,
       font: formData.font,
     });
-
-    setSelectedFont(formData.font);
 
     setFormData({
       recipient_name: "",
@@ -191,29 +219,6 @@ const CardGenerator = () => {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Select
-            name="font"
-            onChange={handleInputChange}
-            aria-label="Select Font"
-          >
-            <option>Select your font</option>
-            <option value="tangerine">Tangerine</option>
-            <option value="notable">Notable</option>
-            <option value="lobster">Lobster</option>
-          </Form.Select>
-          <Form.Label>Font Size</Form.Label>
-          <Form.Range
-            min="12"
-            max="48"
-            name="fontSize"
-            value={formData.fontSize}
-            onChange={handleInputChange}
-          />
-
-          <SketchPicker
-            color={formData.formColor}
-            onChangeComplete={handleChangeComplete}
-          />
           <Button
             disabled={
               !(
@@ -233,25 +238,77 @@ const CardGenerator = () => {
       </div>
       <div className="col-8">
         <h3>Your Image</h3>
-        <Card>
-          <Card.Body id="picture-div">
-            <h5 className={selectedFont} id="to-name">
+        <Card id="parent" className="card-container">
+          <Card.Body className="picture-div" style={styles}>
+            <h5 className="card-text" id="to-name">
               {" "}
               {cardObject.recipient_name}{" "}
             </h5>
-            <h5 className={selectedFont} id="card-message">
+            <h5 className="card-text" id="card-message">
               {cardObject.message}
             </h5>
-            <h5 className={selectedFont} id="from-name">
+            <h5 className="card-text" id="from-name">
               {" "}
               {cardObject.sender_name}{" "}
             </h5>
             <Card.Img src={singlePicture} />
           </Card.Body>
         </Card>
-        <Button type="button" id="save-card" onClick={handleImageSave}>
-          Save
-        </Button>
+
+        <Card id="style-card">
+          <Form onSubmit={handleImageSave}>
+            <Form.Label>Select Your Font</Form.Label>
+
+            <Form.Select
+              name="font"
+              onChange={handleStyleChange}
+              aria-label="Select Font"
+            >
+              <option value='"Georgia","Times New Roman", Times, serif'>
+                Georgia
+              </option>
+              <option value="Tangerine, cursive">Tangerine</option>
+              <option value='"Notable", sans-serif'>Notable</option>
+              <option value='"Lobster", cursive'>Lobster</option>
+            </Form.Select>
+            <Form.Label>Font Size</Form.Label>
+            <Form.Range
+              min="12"
+              max="48"
+              name="fontSize"
+              value={styleData.fontSize}
+              onChange={handleStyleChange}
+            />
+            <div
+              style={{
+                backgroundColor: styleData.fontColor,
+                width: 100,
+                height: 50,
+                border: "2px solid white",
+              }}
+              title="Choose your color"
+              // onChange={(e) => handleStyleChange(e)}
+              // value={styleData.fontColor}
+              // name="font-color"
+            ></div>
+            <Form.Control
+              type="hidden"
+              id="exampleColorInput"
+              value={styleData.fontColor}
+              name="fontColor"
+              onChange={handleStyleChange}
+            />
+
+            <SketchPicker
+              onChange={(e) => handleColorChange(e)}
+              color={sketchPickerColor}
+              value={sketchPickerColor}
+            />
+            <Button type="submit" id="save-card">
+              Save
+            </Button>
+          </Form>
+        </Card>
       </div>
     </main>
   );
