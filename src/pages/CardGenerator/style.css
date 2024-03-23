@@ -4,47 +4,28 @@
     position: relative;
 }
 
-#to-name{
-position: absolute;
-top:1em;
-left: 1em;
+#parent {
+    position: relative;
+    border: 3px solid green;
+    height: 50%;
+
+}
+.col-8{
+    height: 100vh;
+}
+#style-card{
+    height: 50%;
+}
+.picture-div {
+    position:absolute;
+    top:0;
+    left:0;
+
 }
 
-#card-message{
-position: absolute;
-top:50%;
-left: 50%;
-}
-
-#from-name{
-position: absolute;
-bottom:1em;
-right: 1em;
-}
 
 .card-body img {
-    width: 100%;
-}
-.georgia {
-font-family: Georgia, 'Times New Roman', Times, serif;
-}
-.tangerine {
-    font-family: "Tangerine", cursive;
+    width: 75%;
+    height: auto;
 }
 
-.lobster {
-    font-family: "Lobster",cursive;
-}
-
-.notable {
-    font-family: "Notable",sans-serif;
-}
-
-/* #to-name,#from-name, #card-message {
-    color: var(--fontColor);
-} */
-
-#picture-div {
-    color:var(--fontColor);
-    font-size: var(--fontSize);
-}

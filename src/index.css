@@ -7,7 +7,7 @@
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
   --textMain: #646cff;
-  --fontMain:Georgia, serif;
+  --fontFamily:Georgia, serif;
   --fontColor:#0e0d0d;
   --fontSize:"24pt"
   font-synthesis: none;
