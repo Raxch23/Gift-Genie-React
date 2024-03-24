@@ -8,6 +8,8 @@ import YourCards from "./pages/YourCards/index.jsx";
 import CardGenerator from "./pages/CardGenerator/index.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Giftcard from "./pages/Giftcard/index.jsx";
+import "bootstrap/dist/css/bootstrap.css"; // or include from a CDN
+import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css";
 
 // import "https://fonts.googleapis.com/css?family=Tangerine|Notable|Droid+Sans|Lobster";
 

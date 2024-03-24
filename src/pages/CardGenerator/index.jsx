@@ -3,6 +3,7 @@ import { Card, Form, Button, Alert } from "react-bootstrap";
 import pexelsApi from "../../utils/pexelsAPI.js";
 import "./style.css";
 import { SketchPicker } from "react-color";
+import RangeSlider from "react-bootstrap-range-slider";
 
 const CardGenerator = () => {
   const pid = localStorage.getItem("currentImage");
@@ -13,21 +14,23 @@ const CardGenerator = () => {
     r: "13",
     g: "110",
     b: "253",
-    a: "1", 
+    a: "1",
   });
-
 
   const [styleData, setStyleData] = useState({
     font: "",
     fontColor: "",
-    fontSize: "",
+    fontSize: "30",
   });
 
-
-const styles={
-  fontSize: styleData.fontSize, fontColor:styleData.fontColor, fontFamily:styleData.font
-}
-console.log(styles)
+  const styles = {
+    // fontSize: styleData.fontSize, fontColor:styleData.fontColor, fontFamily:styleData.font
+    h5: {
+      fontFamily: styleData.font,
+      fontSize: styleData.fontSize + "pt",
+      color: styleData.fontColor,
+    },
+  };
   const [formData, setFormData] = useState({
     recipient_name: "",
     recipient_email: "",
@@ -81,7 +84,7 @@ console.log(styles)
       a: event.rgb.a.toString(),
     });
 
-    console.log(styleData)
+    console.log(styleData);
   };
   const handleStyleChange = (event) => {
     const { name, value } = event.target;
@@ -89,7 +92,7 @@ console.log(styles)
     setStyleData({ ...styleData, [name]: value });
     setSelectedFont(styleData.font);
     // document.querySelector(".card-text").style.setProperty("--fontFamily",selectedFont)
-    console.log(styleData)
+    console.log(styleData);
   };
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -239,15 +242,15 @@ console.log(styles)
       <div className="col-8">
         <h3>Your Image</h3>
         <Card id="parent" className="card-container">
-          <Card.Body className="picture-div" style={styles}>
-            <h5 className="card-text" id="to-name">
+          <Card.Body className="picture-div" style={styles.h5}>
+            <h5 className="card-text" style={styles.h5} id="to-name">
               {" "}
               {cardObject.recipient_name}{" "}
             </h5>
-            <h5 className="card-text" id="card-message">
+            <h5 className="card-text" style={styles.h5} id="card-message">
               {cardObject.message}
             </h5>
-            <h5 className="card-text" id="from-name">
+            <h5 className="card-text" style={styles.h5} id="from-name">
               {" "}
               {cardObject.sender_name}{" "}
             </h5>
@@ -272,13 +275,15 @@ console.log(styles)
               <option value='"Lobster", cursive'>Lobster</option>
             </Form.Select>
             <Form.Label>Font Size</Form.Label>
-            <Form.Range
-              min="12"
-              max="48"
-              name="fontSize"
+            <RangeSlider
+              min={12}
+              max={48}
               value={styleData.fontSize}
+              name="fontSize"
               onChange={handleStyleChange}
             />
+
+            
             <div
               style={{
                 backgroundColor: styleData.fontColor,
