@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, Form, Button, Alert } from "react-bootstrap";
+import { Card, Form, Button, Alert, Row, Col } from "react-bootstrap";
 import pexelsApi from "../../utils/pexelsAPI.js";
 import "./style.css";
 import { SketchPicker } from "react-color";
@@ -39,7 +39,6 @@ const CardGenerator = () => {
     message: "",
   });
 
-  console.log(styleData);
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
@@ -133,8 +132,9 @@ const CardGenerator = () => {
   };
 
   return (
-    <main className="row" style={{ border: "1px solid black" }}>
-      <div className="col-4">
+    <Row style={{ border: "1px solid black", maxWidth: "1500px" }}>
+      <Col lg={1}></Col>
+      <Col lg={3}>
         <h3>left side</h3>
         <Form
           noValidate
@@ -238,84 +238,104 @@ const CardGenerator = () => {
             Submit
           </Button>
         </Form>
-      </div>
-      <div className="col-8">
-        <h3>Your Image</h3>
-        <Card id="parent" className="card-container">
-          <Card.Body className="picture-div" style={styles.h5}>
-            <h5 className="card-text" style={styles.h5} id="to-name">
-              {" "}
-              {cardObject.recipient_name}{" "}
-            </h5>
-            <h5 className="card-text" style={styles.h5} id="card-message">
-              {cardObject.message}
-            </h5>
-            <h5 className="card-text" style={styles.h5} id="from-name">
-              {" "}
-              {cardObject.sender_name}{" "}
-            </h5>
-            <Card.Img src={singlePicture} />
-          </Card.Body>
-        </Card>
+      </Col>
+      <Col lg={7}>
+        <Row>
+          <Col lg={1}></Col>
 
-        <Card id="style-card">
-          <Form onSubmit={handleImageSave}>
-            <Form.Label>Select Your Font</Form.Label>
+          <Col lg={10}>
+            <Card id="parent" className="card-container">
+              <Card.Body>
+                <div className="picture-div" style={styles.h5}>
+                  <div id="text-box">
+                    <h5 className="card-text" style={styles.h5} id="to-name">
+                      {" "}
+                      {cardObject.recipient_name}{" "}
+                    </h5>
+                    <h5
+                      className="card-text"
+                      style={styles.h5}
+                      id="card-message"
+                    >
+                      {cardObject.message}
+                    </h5>
+                    <h5 className="card-text" style={styles.h5} id="from-name">
+                      {" "}
+                      {cardObject.sender_name}{" "}
+                    </h5>
+                  </div>
+                  <Card.Img src={singlePicture} className="card-img" />{" "}
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col lg={1}></Col>
+        </Row>
 
-            <Form.Select
-              name="font"
-              onChange={handleStyleChange}
-              aria-label="Select Font"
-            >
-              <option value='"Georgia","Times New Roman", Times, serif'>
-                Georgia
-              </option>
-              <option value="Tangerine, cursive">Tangerine</option>
-              <option value='"Notable", sans-serif'>Notable</option>
-              <option value='"Lobster", cursive'>Lobster</option>
-            </Form.Select>
-            <Form.Label>Font Size</Form.Label>
-            <RangeSlider
-              min={12}
-              max={48}
-              value={styleData.fontSize}
-              name="fontSize"
-              onChange={handleStyleChange}
-            />
+        <Row>
+          <Col lg={1}></Col>
+          <Col lg={10}>
+            <Card id="style-card">
+              <Form onSubmit={handleImageSave}>
+                <Form.Label>Select Your Font</Form.Label>
 
-            
-            <div
-              style={{
-                backgroundColor: styleData.fontColor,
-                width: 100,
-                height: 50,
-                border: "2px solid white",
-              }}
-              title="Choose your color"
-              // onChange={(e) => handleStyleChange(e)}
-              // value={styleData.fontColor}
-              // name="font-color"
-            ></div>
-            <Form.Control
-              type="hidden"
-              id="exampleColorInput"
-              value={styleData.fontColor}
-              name="fontColor"
-              onChange={handleStyleChange}
-            />
+                <Form.Select
+                  name="font"
+                  onChange={handleStyleChange}
+                  aria-label="Select Font"
+                >
+                  <option value='"Georgia","Times New Roman", Times, serif'>
+                    Georgia
+                  </option>
+                  <option value="Tangerine, cursive">Tangerine</option>
+                  <option value='"Notable", sans-serif'>Notable</option>
+                  <option value='"Lobster", cursive'>Lobster</option>
+                </Form.Select>
+                <Form.Label>Font Size</Form.Label>
+                <RangeSlider
+                  min={12}
+                  max={48}
+                  value={styleData.fontSize}
+                  name="fontSize"
+                  onChange={handleStyleChange}
+                />
 
-            <SketchPicker
-              onChange={(e) => handleColorChange(e)}
-              color={sketchPickerColor}
-              value={sketchPickerColor}
-            />
-            <Button type="submit" id="save-card">
-              Save
-            </Button>
-          </Form>
-        </Card>
-      </div>
-    </main>
+                <div
+                  style={{
+                    backgroundColor: styleData.fontColor,
+                    width: 100,
+                    height: 50,
+                    border: "2px solid white",
+                  }}
+                  title="Choose your color"
+                  // onChange={(e) => handleStyleChange(e)}
+                  // value={styleData.fontColor}
+                  // name="font-color"
+                ></div>
+                <Form.Control
+                  type="hidden"
+                  id="exampleColorInput"
+                  value={styleData.fontColor}
+                  name="fontColor"
+                  onChange={handleStyleChange}
+                />
+
+                <SketchPicker
+                  onChange={(e) => handleColorChange(e)}
+                  color={sketchPickerColor}
+                  value={sketchPickerColor}
+                />
+                <Button type="submit" id="save-card">
+                  Save
+                </Button>
+              </Form>
+            </Card>
+          </Col>
+          <Col lg={1}></Col>
+        </Row>
+      </Col>
+      <Col lg={1}></Col>
+    </Row>
   );
 };
 
