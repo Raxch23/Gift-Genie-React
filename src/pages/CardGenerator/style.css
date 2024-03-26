@@ -20,12 +20,8 @@
   position: relative;
 }
 #text-box {
-    position: absolute;
-    top:40%;
-    left: 40%;
-
+  position: absolute;
 }
-
 
 .card {
   padding: 0;
