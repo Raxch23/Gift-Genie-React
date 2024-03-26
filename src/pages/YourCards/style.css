@@ -1,3 +1,6 @@
-img {
-    width: 18em;
+.picture-div {
+  position: relative;
+}
+#text-box {
+  position: absolute;
 }

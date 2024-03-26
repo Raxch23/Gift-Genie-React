@@ -12,6 +12,8 @@ import pexelsApi from "../../utils/pexelsAPI.js";
 import "./style.css";
 import { SketchPicker } from "react-color";
 import RangeSlider from "react-bootstrap-range-slider";
+import { v4 as uuidv4 } from "uuid";
+
 
 const CardGenerator = () => {
   const pid = localStorage.getItem("currentImage");
@@ -156,6 +158,8 @@ const CardGenerator = () => {
 
   const handleImageSave = (e) => {
     e.preventDefault();
+
+
     const finalCard = {
       recipient_name: formData.recipient_name,
       recipient_email: formData.recipient_email,
@@ -171,6 +175,7 @@ const CardGenerator = () => {
         x: position.x,
         y: position.y,
       },
+      id:uuidv4()
     }; 
     saveCardArray.push(finalCard);
     setSaveCardArray(saveCardArray)

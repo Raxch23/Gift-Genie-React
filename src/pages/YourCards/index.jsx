@@ -1,15 +1,21 @@
+import { useState } from "react";
 import Main from "../../components/Main/index.jsx";
 import "./style.css";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Carousel } from "react-bootstrap";
 
 const YourCards = () => {
   const cardArray = JSON.parse(localStorage.getItem("saveCardArray"));
+
   console.log(cardArray);
-  const selectCard = (event) => {
-    const pdfCard = document.getElementById("selectedImg");
-    console.log(event.target.value);
-    localStorage.setItem("card-to-print", event.target.value);
-window.location.href="carddownload"
+  const [index, setIndex] = useState(0);
+  //   const selectCard = (event) => {
+  //     const pdfCard = document.getElementById("selectedImg");
+  //     console.log(event.target.value);
+  //     localStorage.setItem("card-to-print", event.target.value);
+  // window.location.href="carddownload"
+  //   };
+  const handleSelect = (selectedIndex) => {
+    setIndex(selectedIndex);
   };
 
   return (
@@ -19,25 +25,49 @@ window.location.href="carddownload"
       </div>
       <div className="col-8">
         <h3>right side</h3>
-        <div>
-          {cardArray.map((card) => (
-            <Card
-              id="selectedImg"
-              key={card.pid}
-              style={{
-                width: "16em",
-                padding: "12px 12px 24px 12px",
-                margin: "10px 0",
-                boxShadow: "1px 1px 5px grey",
-              }}
-            >
-              <Card.Img src={card.imgSRC} alt="" />
-              <Button onClick={selectCard}   value={card.pid} type="button">
-                Print
-              </Button>
-            </Card>
-          ))}
-        </div>
+        {cardArray.length > 0 ? (
+          <Carousel activeIndex={index} onSelect={handleSelect}>
+            {cardArray.map((card) => (
+              <Carousel.Item key={card.id}>
+                {/* <img src={card.imgSRC}/> */}
+                <Card id="parent" className="card-container">
+                  <Card.Body>
+                    <div className="picture-div" style={{fontFamily:card.font, fontSize:card.fontSize+"pt", color:card.fontColor}}>
+                      <div id="text-box" style={{left:card.position.x+"%", top:card.position.y+"%"}}>
+                        <h5
+                          className="card-text"
+                          // style={styles.h5}
+                          id="to-name"
+                        >
+                          {" "}
+                          {card.recipient_name}{" "}
+                        </h5>
+                        <h5
+                          className="card-text"
+                          // style={styles.h5}
+                          id="card-message"
+                        >
+                          {card.message}
+                        </h5>
+                        <h5
+                          className="card-text"
+                          // style={styles.h5}
+                          id="from-name"
+                        >
+                          {" "}
+                          {card.sender_name}{" "}
+                        </h5>
+                      </div>
+                      <Card.Img src={card.imgSRC} className="card-img" />{" "}
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Carousel.Item>
+            ))}
+          </Carousel>
+        ) : (
+          <h1>No images found</h1>
+        )}
       </div>
     </main>
   );
