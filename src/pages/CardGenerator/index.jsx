@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
-import { Card, Form, Button, Alert, Row, Col } from "react-bootstrap";
+import {
+  Card,
+  Form,
+  Button,
+  Alert,
+  Row,
+  Col,
+  ButtonGroup,
+} from "react-bootstrap";
 import pexelsApi from "../../utils/pexelsAPI.js";
 import "./style.css";
 import { SketchPicker } from "react-color";
@@ -20,8 +28,15 @@ const CardGenerator = () => {
   const [styleData, setStyleData] = useState({
     font: "",
     fontColor: "",
-    fontSize: "30",
+    fontSize: "20",
   });
+
+  const [leftPosition, setLeftPosition] = useState(40);
+  // const [rightPosition, setRightPosition] = useState(0);
+  const [topPosition, setTopPosition] = useState(40);
+  // const [bottomPosition, setBottomPosition] = useState(0);
+
+  const [position, setPosition] = useState({ x: 40, y: 40 });
 
   const styles = {
     // fontSize: styleData.fontSize, fontColor:styleData.fontColor, fontFamily:styleData.font
@@ -29,6 +44,11 @@ const CardGenerator = () => {
       fontFamily: styleData.font,
       fontSize: styleData.fontSize + "pt",
       color: styleData.fontColor,
+    },
+
+    textBox: {
+      left: position.x + "%",
+      top: position.y + "%",
     },
   };
   const [formData, setFormData] = useState({
@@ -85,13 +105,42 @@ const CardGenerator = () => {
 
     console.log(styleData);
   };
+  const moveMessage = (event) => {
+    const { name, value } = event.target;
+    console.log(name, value);
+
+    if (name === "left") {
+      setLeftPosition(leftPosition - 1);
+    }
+
+    if (name === "right") {
+      setLeftPosition(leftPosition + 1);
+    }
+
+    if (name === "top") {
+      setTopPosition(topPosition - 1);
+    }
+
+    if (name === "bottom") {
+      setTopPosition(topPosition + 1);
+    }
+
+    console.log(position);
+
+    setPosition({ x: leftPosition, y: topPosition });
+
+    //left click-1x
+    //right click+1x
+    //up click -1y
+    //down click +1y
+  };
+
   const handleStyleChange = (event) => {
     const { name, value } = event.target;
-
+    console.log(event.target.name);
     setStyleData({ ...styleData, [name]: value });
     setSelectedFont(styleData.font);
     // document.querySelector(".card-text").style.setProperty("--fontFamily",selectedFont)
-    console.log(styleData);
   };
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -247,7 +296,7 @@ const CardGenerator = () => {
             <Card id="parent" className="card-container">
               <Card.Body>
                 <div className="picture-div" style={styles.h5}>
-                  <div id="text-box">
+                  <div id="text-box" style={styles.textBox}>
                     <h5 className="card-text" style={styles.h5} id="to-name">
                       {" "}
                       {cardObject.recipient_name}{" "}
@@ -293,13 +342,43 @@ const CardGenerator = () => {
                 </Form.Select>
                 <Form.Label>Font Size</Form.Label>
                 <RangeSlider
-                  min={12}
-                  max={48}
+                  min={10}
+                  max={40}
                   value={styleData.fontSize}
                   name="fontSize"
                   onChange={handleStyleChange}
                 />
-
+                <ButtonGroup>
+                  <Button
+                    type="button"
+                    value={leftPosition}
+                    name="left"
+                    onClick={(event) => moveMessage(event)}
+                  >
+                    Left
+                  </Button>
+                  <Button
+                    value={topPosition}
+                    name="top"
+                    onClick={(event) => moveMessage(event)}
+                  >
+                    Up
+                  </Button>
+                  <Button
+                    value={leftPosition}
+                    name="right"
+                    onClick={(event) => moveMessage(event)}
+                  >
+                    Right
+                  </Button>
+                  <Button
+                    value={topPosition}
+                    name="bottom"
+                    onClick={(event) => moveMessage(event)}
+                  >
+                    Down
+                  </Button>
+                </ButtonGroup>
                 <div
                   style={{
                     backgroundColor: styleData.fontColor,
