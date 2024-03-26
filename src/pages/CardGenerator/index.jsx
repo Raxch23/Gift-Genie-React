@@ -14,7 +14,6 @@ import { SketchPicker } from "react-color";
 import RangeSlider from "react-bootstrap-range-slider";
 import { v4 as uuidv4 } from "uuid";
 
-
 const CardGenerator = () => {
   const pid = localStorage.getItem("currentImage");
   const [singlePicture, setSinglePicture] = useState("");
@@ -30,7 +29,7 @@ const CardGenerator = () => {
   const [styleData, setStyleData] = useState({
     font: "",
     fontColor: "",
-    fontSize: "20",
+    fontSize: "1"+"em",
   });
 
   const [leftPosition, setLeftPosition] = useState(40);
@@ -44,7 +43,7 @@ const CardGenerator = () => {
     // fontSize: styleData.fontSize, fontColor:styleData.fontColor, fontFamily:styleData.font
     h5: {
       fontFamily: styleData.font,
-      fontSize: styleData.fontSize + "pt",
+      fontSize: styleData.fontSize + "em",
       color: styleData.fontColor,
     },
 
@@ -159,7 +158,6 @@ const CardGenerator = () => {
   const handleImageSave = (e) => {
     e.preventDefault();
 
-
     const finalCard = {
       recipient_name: formData.recipient_name,
       recipient_email: formData.recipient_email,
@@ -175,11 +173,11 @@ const CardGenerator = () => {
         x: position.x,
         y: position.y,
       },
-      id:uuidv4()
-    }; 
+      id: uuidv4(),
+    };
     saveCardArray.push(finalCard);
-    setSaveCardArray(saveCardArray)
-    localStorage.setItem("saveCardArray",JSON.stringify(saveCardArray))
+    setSaveCardArray(saveCardArray);
+    localStorage.setItem("saveCardArray", JSON.stringify(saveCardArray));
 
     setFormData({
       recipient_name: "",
@@ -353,9 +351,11 @@ const CardGenerator = () => {
                   <option value='"Lobster", cursive'>Lobster</option>
                 </Form.Select>
                 <Form.Label>Font Size</Form.Label>
+
                 <RangeSlider
-                  min={10}
-                  max={40}
+                  min="1.0"
+                  max="1.4"
+                  step=".1"
                   value={styleData.fontSize}
                   name="fontSize"
                   onChange={handleStyleChange}
