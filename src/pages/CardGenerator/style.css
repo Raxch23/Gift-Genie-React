@@ -5,27 +5,40 @@
 } */
 
 #parent {
-    position: relative;
-    border: 3px solid green;
-    height: 50%;
-
+  padding: 0;
 }
-.col-8{
+
+/* .col-8{
     height: 100vh;
+} */
+#style-card {
+  width: 80%;
 }
-#style-card{
-    height: 50%;
-}
+
 .picture-div {
-    position:absolute;
-    top:0;
-    left:0;
+  border: 1px solid red;
+  position: relative;
+}
+#text-box {
+    position: absolute;
+    top:40%;
+    left: 40%;
 
 }
 
 
-.card-body img {
+.card {
+  padding: 0;
+}
+
+/* .card-img{
+    border: 2px solid purple;
+    position: absolute;
+    top: 0;
+    left: 0;
+} */
+
+/* .card-body img {
     width: 75%;
     height: auto;
-}
-
+} */
