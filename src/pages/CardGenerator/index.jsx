@@ -107,7 +107,6 @@ const CardGenerator = () => {
   };
   const moveMessage = (event) => {
     const { name, value } = event.target;
-    console.log(name, value);
 
     if (name === "left") {
       setLeftPosition(leftPosition - 1);
@@ -125,19 +124,11 @@ const CardGenerator = () => {
       setTopPosition(topPosition + 1);
     }
 
-    console.log(position);
-
     setPosition({ x: leftPosition, y: topPosition });
-
-    //left click-1x
-    //right click+1x
-    //up click -1y
-    //down click +1y
   };
 
   const handleStyleChange = (event) => {
     const { name, value } = event.target;
-    console.log(event.target.name);
     setStyleData({ ...styleData, [name]: value });
     setSelectedFont(styleData.font);
     // document.querySelector(".card-text").style.setProperty("--fontFamily",selectedFont)
@@ -161,6 +152,29 @@ const CardGenerator = () => {
       imgSRC: singlePicture,
       font: formData.font,
     });
+  };
+
+  const handleImageSave = (e) => {
+    e.preventDefault();
+    const finalCard = {
+      recipient_name: formData.recipient_name,
+      recipient_email: formData.recipient_email,
+      sender_name: formData.sender_name,
+      sender_email: formData.sender_email,
+      message: formData.message,
+      pid,
+      imgSRC: singlePicture,
+      font: styleData.font,
+      fontColor: styleData.fontColor,
+      fontSize: styleData.fontSize,
+      position: {
+        x: position.x,
+        y: position.y,
+      },
+    }; 
+    saveCardArray.push(finalCard);
+    setSaveCardArray(saveCardArray)
+    localStorage.setItem("saveCardArray",JSON.stringify(saveCardArray))
 
     setFormData({
       recipient_name: "",
@@ -170,13 +184,6 @@ const CardGenerator = () => {
       message: "",
       font: "",
     });
-  };
-
-  const handleImageSave = () => {
-    saveCardArray.push(cardObject);
-    console.log(saveCardArray);
-    setSaveCardArray(saveCardArray);
-    localStorage.setItem("saveCardArray", JSON.stringify(saveCardArray));
     window.location.href = "/yourcards";
   };
 
