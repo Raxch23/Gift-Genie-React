@@ -21,22 +21,57 @@ const YourCards = () => {
     iframedoc.body.innerHTML = htmlString;
 
     let canvas = await html2canvas(iframedoc.body, {});
+    console.log(canvas);
+
     // Convert the iframe into a PNG image using canvas.
     let imgData = canvas.toDataURL("image/png");
-
     // Create a PDF document and add the image as a page.
     const doc = new jspdf({
       format: "a4",
       unit: "mm",
     });
     doc.addImage(imgData, "PNG", 0, 0, 210, 297);
-    doc.save("YourCards.pdf");
     // Get the file as blob output.
     let blob = doc.output("blob");
-    console.log(blob)
+    console.log(blob);
+    doc.save("YourCards.pdf");
+
     // Remove the iframe from the document when the file is generated.
     // document.body.removeChild(iframe);
-    document.getElementById("root").removeChild(iframe)
+    document.getElementById("root").removeChild(iframe);
+  };
+
+  const getHtmlString = (event) => {
+    const htmlFrame = `<!DOCTYPE html>
+  <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cards</title>
+</head>
+<style>
+.picture-div {
+  position: relative;
+}
+#text-box {
+  position: absolute;
+}
+.card-img{
+  border: 3px solid red; 
+  width: 600px
+}
+
+</style>
+<body style="width:2000px">`;
+
+const htmlEnd = `</body>
+</html>`;
+
+    const htmlString = event.target.parentNode.childNodes[0].innerHTML;
+    // htmlStringToPdf(htmlString)
+    const result=htmlFrame+htmlString+htmlEnd
+    console.log(result)
+    htmlStringToPdf(result)
   };
 
   const handleSelect = (selectedIndex) => {
@@ -126,13 +161,7 @@ const YourCards = () => {
                   >
                     Delete
                   </Button>
-                  <Button
-                    type="button"
-                    className="m-1"
-                    onClick={(htmlString) => {
-                      htmlStringToPdf("<h1>test</h1>");
-                    }}
-                  >
+                  <Button type="button" className="m-1" onClick={getHtmlString}>
                     Print
                   </Button>
                   <Button type="button" className="m-1">
