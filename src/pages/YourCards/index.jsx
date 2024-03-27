@@ -2,33 +2,59 @@ import { useState } from "react";
 import Main from "../../components/Main/index.jsx";
 import "./style.css";
 import { Card, Button, Carousel, Row, Col } from "react-bootstrap";
+import jspdf from "jspdf";
+import html2canvas from "html2canvas";
 
 const YourCards = () => {
   // const cardArray = JSON.parse(localStorage.getItem("saveCardArray"));
-const [cardArray, setCardArray]=useState(JSON.parse(localStorage.getItem("saveCardArray")))
+  const [cardArray, setCardArray] = useState(
+    JSON.parse(localStorage.getItem("saveCardArray"))
+  );
 
   console.log(cardArray);
   const [index, setIndex] = useState(0);
-  //   const selectCard = (event) => {
-  //     const pdfCard = document.getElementById("selectedImg");
-  //     console.log(event.target.value);
-  //     localStorage.setItem("card-to-print", event.target.value);
-  // window.location.href="carddownload"
-  //   };
+  const htmlStringToPdf = async (htmlString) => {
+    let iframe = document.createElement("iframe");
+    iframe.style.visibility = "hidden";
+    document.getElementById("root").appendChild(iframe);
+    let iframedoc = iframe.contentDocument || iframe.contentWindow.document;
+    iframedoc.body.innerHTML = htmlString;
+
+    let canvas = await html2canvas(iframedoc.body, {});
+    // Convert the iframe into a PNG image using canvas.
+    let imgData = canvas.toDataURL("image/png");
+
+    // Create a PDF document and add the image as a page.
+    const doc = new jspdf({
+      format: "a4",
+      unit: "mm",
+    });
+    doc.addImage(imgData, "PNG", 0, 0, 210, 297);
+    doc.save("YourCards.pdf");
+    // Get the file as blob output.
+    let blob = doc.output("blob");
+    console.log(blob)
+    // Remove the iframe from the document when the file is generated.
+    // document.body.removeChild(iframe);
+    document.getElementById("root").removeChild(iframe)
+  };
+
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };
 
-  const handleImgDelete=(event)=>{
-    console.log(event.target.value)
-    const updatedCardArray=cardArray.filter(card =>card.id !==event.target.value)
-    setCardArray(updatedCardArray)
-  }
-
+  const handleImgDelete = (event) => {
+    console.log(event.target.value);
+    const updatedCardArray = cardArray.filter(
+      (card) => card.id !== event.target.value
+    );
+    setCardArray(updatedCardArray);
+    localStorage.setItem("saveCardArray", JSON.stringify(cardArray));
+  };
 
   return (
     <>
-      <Row >
+      <Row>
         <Col lg={12}>
           <h2>Your Cards</h2>
         </Col>
@@ -92,10 +118,21 @@ const [cardArray, setCardArray]=useState(JSON.parse(localStorage.getItem("saveCa
                       </div>
                     </Card.Body>
                   </Card>
-                  <Button type="button" className="m-1" onClick={handleImgDelete} value={card.id}  >
+                  <Button
+                    type="button"
+                    className="m-1"
+                    onClick={handleImgDelete}
+                    value={card.id}
+                  >
                     Delete
                   </Button>
-                  <Button type="button" className="m-1">
+                  <Button
+                    type="button"
+                    className="m-1"
+                    onClick={(htmlString) => {
+                      htmlStringToPdf("<h1>test</h1>");
+                    }}
+                  >
                     Print
                   </Button>
                   <Button type="button" className="m-1">
