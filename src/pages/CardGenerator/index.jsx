@@ -115,7 +115,6 @@ const CardGenerator = () => {
   };
   const moveMessage = (event) => {
     const { name, value } = event.target;
-
     if (name === "left") {
       setLeftPosition(leftPosition - 1);
     }
@@ -133,6 +132,8 @@ const CardGenerator = () => {
     }
 
     setPosition({ x: leftPosition, y: topPosition });
+    console.log(position);
+
   };
 
   const handleStyleChange = (event) => {
@@ -218,6 +219,10 @@ const CardGenerator = () => {
             id="message-card"
             style={{ padding: "1em" }}
           >
+            <Row>
+              <h3>Submit your Message</h3>
+            </Row>
+
             <Alert
               dismissible
               onClose={() => setShowAlert(false)}

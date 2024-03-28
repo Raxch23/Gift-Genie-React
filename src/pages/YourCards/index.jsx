@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Main from "../../components/Main/index.jsx";
 import "./style.css";
 import { Card, Button, Carousel, Row, Col } from "react-bootstrap";
@@ -7,9 +7,16 @@ import html2canvas from "html2canvas";
 
 const YourCards = () => {
   // const cardArray = JSON.parse(localStorage.getItem("saveCardArray"));
-  const [cardArray, setCardArray] = useState(
-    JSON.parse(localStorage.getItem("saveCardArray"))
-  );
+  // const [cardArray, setCardArray] = useState(
+  //   JSON.parse(localStorage.getItem("saveCardArray"))
+  // );
+const [cardArray, setCardArray]=useState([])
+
+  useEffect(()=>{
+    const oldArray=JSON.parse(localStorage.getItem("saveCardArray"))
+    const reverseArray=oldArray.reverse()
+    setCardArray(reverseArray)
+  })
 
   console.log(cardArray);
   const [index, setIndex] = useState(0);
