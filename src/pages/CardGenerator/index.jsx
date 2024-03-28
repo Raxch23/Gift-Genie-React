@@ -160,6 +160,8 @@ const CardGenerator = () => {
       imgSRC: singlePicture,
       font: formData.font,
     });
+    document.getElementById("style-card").style.display = "block";
+    document.getElementById("message-card").style.display = "none";
   };
 
   const handleImageSave = (e) => {
@@ -199,24 +201,21 @@ const CardGenerator = () => {
 
   return (
     <>
-      <Row style={{ maxWidth: "1500px", marginTop: "1em" }}>
-        <Col lg={12}>
-          <h3>Build your Card</h3>
-        </Col>
-      </Row>
+      <Row style={{ maxWidth: "1500px", marginTop: "1em" }}></Row>
       <Row
         style={{
           maxWidth: "1500px",
           marginTop: "1em",
+          marginLeft: "3em",
         }}
       >
-        <Col lg={1}></Col>
-        <Col lg={3}>
+        <Col lg={4}>
           <Form
             noValidate
             validated={validated}
             onSubmit={handleFormSubmit}
             className="card"
+            id="message-card"
             style={{ padding: "1em" }}
           >
             <Alert
@@ -315,12 +314,119 @@ const CardGenerator = () => {
               Submit
             </Button>
           </Form>
+          <Card id="style-card" style={{ width: "100%", display: "none" }}>
+            <Form onSubmit={handleImageSave}>
+              <div style={{ display: "flex", justifyContent: "space-around" }}>
+                <div style={{ width: "40%" }}>
+                  <Form.Label>Select Your Font</Form.Label>
+
+                  <Form.Select
+                    name="font"
+                    onChange={handleStyleChange}
+                    aria-label="Select Font"
+                  >
+                    <option value='"Georgia","Times New Roman", Times, serif'>
+                      Georgia
+                    </option>
+                    <option value="Tangerine, cursive">Tangerine</option>
+                    <option value='"Notable", sans-serif'>Notable</option>
+                    <option value='"Lobster", cursive'>Lobster</option>
+                  </Form.Select>
+                </div>
+                <div style={{ width: "40%" }}>
+                  <Form.Label>Font Size</Form.Label>
+
+                  <RangeSlider
+                    min="1.0"
+                    max="1.4"
+                    step=".1"
+                    value={styleData.fontSize}
+                    name="fontSize"
+                    onChange={handleStyleChange}
+                  />
+                </div>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  justifyContent: "space-around",
+                  marginTop: "2em",
+                }}
+              >
+                <div
+                  style={{
+                    margin: "2em",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Form.Label>Position your Message</Form.Label>
+
+                  <ButtonGroup
+                    style={{
+                      height: "fit-content",
+                    }}
+                  >
+                    <Button
+                      type="button"
+                      value={leftPosition}
+                      name="left"
+                      onClick={(event) => moveMessage(event)}
+                    >
+                      <FontAwesomeIcon icon={faArrowLeft} />
+                    </Button>
+                    <Button
+                      value={topPosition}
+                      name="top"
+                      onClick={(event) => moveMessage(event)}
+                    >
+                      <FontAwesomeIcon icon={faArrowUp} />
+                    </Button>
+                    <Button
+                      value={leftPosition}
+                      name="right"
+                      onClick={(event) => moveMessage(event)}
+                    >
+                      <FontAwesomeIcon icon={faArrowRight} />
+                    </Button>
+                    <Button
+                      value={topPosition}
+                      name="bottom"
+                      onClick={(event) => moveMessage(event)}
+                    >
+                      <FontAwesomeIcon icon={faArrowDown} />
+                    </Button>
+                  </ButtonGroup>
+                </div>
+                <Form.Control
+                  type="hidden"
+                  id="exampleColorInput"
+                  value={styleData.fontColor}
+                  name="fontColor"
+                  onChange={handleStyleChange}
+                />
+
+                <SketchPicker
+                  onChange={(e) => handleColorChange(e)}
+                  color={sketchPickerColor}
+                  value={sketchPickerColor}
+                />
+              </div>
+              <Button type="submit" id="save-card">
+                Save
+              </Button>
+            </Form>
+          </Card>
         </Col>
         <Col lg={7}>
           <Row>
             <Col lg={1}></Col>
 
             <Col lg={10}>
+              <Row>
+                <h3>Style your Card</h3>
+              </Row>
               <Card id="parent" className="card-container">
                 <Card.Body>
                   <div className="picture-div" style={styles.h5}>
@@ -356,7 +462,7 @@ const CardGenerator = () => {
           <Row>
             <Col lg={1}></Col>
             <Col lg={10}>
-              <Card id="style-card" style={{ width: "100%", marginTop: "2em" }}>
+              {/* <Card id="style-card" style={{ width: "100%", marginTop: "2em" }}>
                 <Form onSubmit={handleImageSave}>
                   <div
                     style={{ display: "flex", justifyContent: "space-around" }}
@@ -461,7 +567,7 @@ const CardGenerator = () => {
                     Save
                   </Button>
                 </Form>
-              </Card>
+              </Card> */}
             </Col>
             <Col lg={1}></Col>
           </Row>
