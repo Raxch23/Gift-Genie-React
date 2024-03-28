@@ -24,7 +24,7 @@ const PexelPictureGrid = ({ pexelPictureArray,page,handlePageClick, active}) => 
       {pexelPictureArray.map((picture, index) => (
         <PexelPictureCard key={index} picture={picture} />
       ))}
-      <div>
+      <div className="mt-2">
         <Pagination onClick={handlePageClick}>{items}</Pagination>
         <br />
       </div>

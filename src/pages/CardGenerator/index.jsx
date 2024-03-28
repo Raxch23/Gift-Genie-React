@@ -13,6 +13,13 @@ import "./style.css";
 import { SketchPicker } from "react-color";
 import RangeSlider from "react-bootstrap-range-slider";
 import { v4 as uuidv4 } from "uuid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowRight,
+  faArrowLeft,
+  faArrowUp,
+  faArrowDown,
+} from "@fortawesome/free-solid-svg-icons";
 
 const CardGenerator = () => {
   const pid = localStorage.getItem("currentImage");
@@ -29,7 +36,7 @@ const CardGenerator = () => {
   const [styleData, setStyleData] = useState({
     font: "",
     fontColor: "",
-    fontSize: "1"+"em",
+    fontSize: "1" + "em",
   });
 
   const [leftPosition, setLeftPosition] = useState(40);
@@ -191,242 +198,277 @@ const CardGenerator = () => {
   };
 
   return (
-    <Row style={{ border: "1px solid black", maxWidth: "1500px" }}>
-      <Col lg={1}></Col>
-      <Col lg={3}>
-        <h3>left side</h3>
-        <Form
-          noValidate
-          validated={validated}
-          onSubmit={handleFormSubmit}
-          className="card"
-        >
-          <Alert
-            dismissible
-            onClose={() => setShowAlert(false)}
-            show={showAlert}
-            variant="danger"
+    <>
+      <Row style={{ maxWidth: "1500px", marginTop: "1em" }}>
+        <Col lg={12}>
+          <h3>Build your Card</h3>
+        </Col>
+      </Row>
+      <Row
+        style={{
+          maxWidth: "1500px",
+          marginTop: "1em",
+        }}
+      >
+        <Col lg={1}></Col>
+        <Col lg={3}>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleFormSubmit}
+            className="card"
+            style={{ padding: "1em" }}
           >
-            Something went wrong with your message!
-          </Alert>
-          <Form.Group className="mb-3" controlId="recipient_name">
-            <Form.Label>Recipient Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter recipient name"
-              value={formData.recipient_name}
-              name="recipient_name"
-              onChange={handleInputChange}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              recipient name is required!
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="recipient_email">
-            <Form.Label>Recipient's Email Address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter recipient email"
-              value={formData.recipient_email}
-              name="recipient_email"
-              onChange={handleInputChange}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              recipient email is required!
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="sender_name">
-            <Form.Label>Sender Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter sender name"
-              value={formData.sender_name}
-              name="sender_name"
-              onChange={handleInputChange}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              sender name is required!
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="sender_email">
-            <Form.Label>Sender's Email Address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter sender email"
-              value={formData.sender_email}
-              name="sender_email"
-              onChange={handleInputChange}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              sender email is required!
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="message">
-            <Form.Label>Message</Form.Label>
-            <Form.Control
-              type="text"
-              as="textarea"
-              placeholder="Enter Message"
-              value={formData.message}
-              name="message"
-              onChange={handleInputChange}
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              message is required!
-            </Form.Control.Feedback>
-          </Form.Group>
+            <Alert
+              dismissible
+              onClose={() => setShowAlert(false)}
+              show={showAlert}
+              variant="danger"
+            >
+              Something went wrong with your message!
+            </Alert>
+            <Form.Group className="mb-3" controlId="recipient_name">
+              <Form.Label>Recipient Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter recipient name"
+                value={formData.recipient_name}
+                name="recipient_name"
+                onChange={handleInputChange}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                recipient name is required!
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="recipient_email">
+              <Form.Label>Recipient's Email Address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter recipient email"
+                value={formData.recipient_email}
+                name="recipient_email"
+                onChange={handleInputChange}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                recipient email is required!
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="sender_name">
+              <Form.Label>Sender Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter sender name"
+                value={formData.sender_name}
+                name="sender_name"
+                onChange={handleInputChange}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                sender name is required!
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="sender_email">
+              <Form.Label>Sender's Email Address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter sender email"
+                value={formData.sender_email}
+                name="sender_email"
+                onChange={handleInputChange}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                sender email is required!
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="message">
+              <Form.Label>Message</Form.Label>
+              <Form.Control
+                type="text"
+                as="textarea"
+                placeholder="Enter Message"
+                value={formData.message}
+                name="message"
+                onChange={handleInputChange}
+                required
+              />
+              <Form.Control.Feedback type="invalid">
+                message is required!
+              </Form.Control.Feedback>
+            </Form.Group>
 
-          <Button
-            disabled={
-              !(
-                formData.recipient_name &&
-                formData.recipient_email &&
-                formData.sender_name &&
-                formData.sender_email &&
-                formData.message
-              )
-            }
-            variant="primary"
-            type="submit"
-          >
-            Submit
-          </Button>
-        </Form>
-      </Col>
-      <Col lg={7}>
-        <Row>
-          <Col lg={1}></Col>
+            <Button
+              disabled={
+                !(
+                  formData.recipient_name &&
+                  formData.recipient_email &&
+                  formData.sender_name &&
+                  formData.sender_email &&
+                  formData.message
+                )
+              }
+              variant="primary"
+              type="submit"
+            >
+              Submit
+            </Button>
+          </Form>
+        </Col>
+        <Col lg={7}>
+          <Row>
+            <Col lg={1}></Col>
 
-          <Col lg={10}>
-            <Card id="parent" className="card-container">
-              <Card.Body>
-                <div className="picture-div" style={styles.h5}>
-                  <div id="text-box" style={styles.textBox}>
-                    <h5 className="card-text" style={styles.h5} id="to-name">
-                      {" "}
-                      {cardObject.recipient_name}{" "}
-                    </h5>
-                    <h5
-                      className="card-text"
-                      style={styles.h5}
-                      id="card-message"
-                    >
-                      {cardObject.message}
-                    </h5>
-                    <h5 className="card-text" style={styles.h5} id="from-name">
-                      {" "}
-                      {cardObject.sender_name}{" "}
-                    </h5>
+            <Col lg={10}>
+              <Card id="parent" className="card-container">
+                <Card.Body>
+                  <div className="picture-div" style={styles.h5}>
+                    <div id="text-box" style={styles.textBox}>
+                      <h5 className="card-text" style={styles.h5} id="to-name">
+                        {" "}
+                        {cardObject.recipient_name}{" "}
+                      </h5>
+                      <h5
+                        className="card-text"
+                        style={styles.h5}
+                        id="card-message"
+                      >
+                        {cardObject.message}
+                      </h5>
+                      <h5
+                        className="card-text"
+                        style={styles.h5}
+                        id="from-name"
+                      >
+                        {" "}
+                        {cardObject.sender_name}{" "}
+                      </h5>
+                    </div>
+                    <Card.Img src={singlePicture} className="card-img" />{" "}
                   </div>
-                  <Card.Img src={singlePicture} className="card-img" />{" "}
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col lg={1}></Col>
-        </Row>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col lg={1}></Col>
+          </Row>
 
-        <Row>
-          <Col lg={1}></Col>
-          <Col lg={10}>
-            <Card id="style-card">
-              <Form onSubmit={handleImageSave}>
-                <Form.Label>Select Your Font</Form.Label>
+          <Row>
+            <Col lg={1}></Col>
+            <Col lg={10}>
+              <Card id="style-card" style={{ width: "100%", marginTop: "2em" }}>
+                <Form onSubmit={handleImageSave}>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-around" }}
+                  >
+                    <div style={{ width: "40%" }}>
+                      <Form.Label>Select Your Font</Form.Label>
 
-                <Form.Select
-                  name="font"
-                  onChange={handleStyleChange}
-                  aria-label="Select Font"
-                >
-                  <option value='"Georgia","Times New Roman", Times, serif'>
-                    Georgia
-                  </option>
-                  <option value="Tangerine, cursive">Tangerine</option>
-                  <option value='"Notable", sans-serif'>Notable</option>
-                  <option value='"Lobster", cursive'>Lobster</option>
-                </Form.Select>
-                <Form.Label>Font Size</Form.Label>
+                      <Form.Select
+                        name="font"
+                        onChange={handleStyleChange}
+                        aria-label="Select Font"
+                      >
+                        <option value='"Georgia","Times New Roman", Times, serif'>
+                          Georgia
+                        </option>
+                        <option value="Tangerine, cursive">Tangerine</option>
+                        <option value='"Notable", sans-serif'>Notable</option>
+                        <option value='"Lobster", cursive'>Lobster</option>
+                      </Form.Select>
+                    </div>
+                    <div style={{ width: "40%" }}>
+                      <Form.Label>Font Size</Form.Label>
 
-                <RangeSlider
-                  min="1.0"
-                  max="1.4"
-                  step=".1"
-                  value={styleData.fontSize}
-                  name="fontSize"
-                  onChange={handleStyleChange}
-                />
-                <ButtonGroup>
-                  <Button
-                    type="button"
-                    value={leftPosition}
-                    name="left"
-                    onClick={(event) => moveMessage(event)}
+                      <RangeSlider
+                        min="1.0"
+                        max="1.4"
+                        step=".1"
+                        value={styleData.fontSize}
+                        name="fontSize"
+                        onChange={handleStyleChange}
+                      />
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row-reverse",
+                      justifyContent: "space-around",
+                      marginTop: "2em",
+                    }}
                   >
-                    Left
-                  </Button>
-                  <Button
-                    value={topPosition}
-                    name="top"
-                    onClick={(event) => moveMessage(event)}
-                  >
-                    Up
-                  </Button>
-                  <Button
-                    value={leftPosition}
-                    name="right"
-                    onClick={(event) => moveMessage(event)}
-                  >
-                    Right
-                  </Button>
-                  <Button
-                    value={topPosition}
-                    name="bottom"
-                    onClick={(event) => moveMessage(event)}
-                  >
-                    Down
-                  </Button>
-                </ButtonGroup>
-                <div
-                  style={{
-                    backgroundColor: styleData.fontColor,
-                    width: 100,
-                    height: 50,
-                    border: "2px solid white",
-                  }}
-                  title="Choose your color"
-                  // onChange={(e) => handleStyleChange(e)}
-                  // value={styleData.fontColor}
-                  // name="font-color"
-                ></div>
-                <Form.Control
-                  type="hidden"
-                  id="exampleColorInput"
-                  value={styleData.fontColor}
-                  name="fontColor"
-                  onChange={handleStyleChange}
-                />
+                    <div
+                      style={{
+                        margin: "2em",
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <Form.Label>Position your Message</Form.Label>
 
-                <SketchPicker
-                  onChange={(e) => handleColorChange(e)}
-                  color={sketchPickerColor}
-                  value={sketchPickerColor}
-                />
-                <Button type="submit" id="save-card">
-                  Save
-                </Button>
-              </Form>
-            </Card>
-          </Col>
-          <Col lg={1}></Col>
-        </Row>
-      </Col>
-      <Col lg={1}></Col>
-    </Row>
+                      <ButtonGroup
+                        style={{
+                          height: "fit-content",
+                        }}
+                      >
+                        <Button
+                          type="button"
+                          value={leftPosition}
+                          name="left"
+                          onClick={(event) => moveMessage(event)}
+                        >
+                          <FontAwesomeIcon icon={faArrowLeft} />
+                        </Button>
+                        <Button
+                          value={topPosition}
+                          name="top"
+                          onClick={(event) => moveMessage(event)}
+                        >
+                          <FontAwesomeIcon icon={faArrowUp} />
+                        </Button>
+                        <Button
+                          value={leftPosition}
+                          name="right"
+                          onClick={(event) => moveMessage(event)}
+                        >
+                          <FontAwesomeIcon icon={faArrowRight} />
+                        </Button>
+                        <Button
+                          value={topPosition}
+                          name="bottom"
+                          onClick={(event) => moveMessage(event)}
+                        >
+                          <FontAwesomeIcon icon={faArrowDown} />
+                        </Button>
+                      </ButtonGroup>
+                    </div>
+                    <Form.Control
+                      type="hidden"
+                      id="exampleColorInput"
+                      value={styleData.fontColor}
+                      name="fontColor"
+                      onChange={handleStyleChange}
+                    />
+
+                    <SketchPicker
+                      onChange={(e) => handleColorChange(e)}
+                      color={sketchPickerColor}
+                      value={sketchPickerColor}
+                    />
+                  </div>
+                  <Button type="submit" id="save-card">
+                    Save
+                  </Button>
+                </Form>
+              </Card>
+            </Col>
+            <Col lg={1}></Col>
+          </Row>
+        </Col>
+        <Col lg={1}></Col>
+      </Row>
+    </>
   );
 };
 
