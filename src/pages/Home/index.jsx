@@ -5,7 +5,6 @@ import PexelPictureGrid from "../../components/PexelPictureGrid/index.jsx";
 import pexelsApi from "../../utils/pexelsAPI.js";
 
 const Home = () => {
-  // const [unsplashPictureArray, setUnsplashPictureArray] = useState([{}]);
   const [pexelPictureArray, setPexelPictureArray] = useState([{}]);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
@@ -49,9 +48,9 @@ const Home = () => {
   };
 
   return (
-    <main className="row mt-5" >
+    <main className="row mt-5">
       <div className="col-12">
-        <div className="search-bar">
+        <div className="search-bar" style={{display:"center"}}>
           <h3>Search for an Image</h3>
 
           <input
@@ -72,7 +71,9 @@ const Home = () => {
       </div>
 
       <div className="col-12">
-        <h3   className="subtitle" style={{display:"none"}}>Select your Image</h3>
+        <h3 className="subtitle" style={{display:"none"}}>
+          Select your Image
+        </h3>
       </div>
       <div className="row mt-2">
         {pexelPictureArray.length === 10 ? (
