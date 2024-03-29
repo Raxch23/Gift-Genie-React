@@ -3,7 +3,7 @@ import "./style.css";
 const Header = () => {
   return (
     <header>
-      <div>
+      <div >
         <a href="/">
           <h1>Gift Genie</h1>
         </a>

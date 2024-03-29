@@ -133,7 +133,6 @@ const CardGenerator = () => {
 
     setPosition({ x: leftPosition, y: topPosition });
     console.log(position);
-
   };
 
   const handleStyleChange = (event) => {
@@ -418,9 +417,14 @@ const CardGenerator = () => {
                   value={sketchPickerColor}
                 />
               </div>
-              <Button type="submit" id="save-card">
-                Save
-              </Button>
+
+              <div>
+                <Button type="submit" id="save-card" style={{
+                  margin:"1em"
+                }}>
+                  Save Your Card
+                </Button>
+              </div>
             </Form>
           </Card>
         </Col>

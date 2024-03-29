@@ -1,22 +1,21 @@
 import { useState, useEffect } from "react";
 import Main from "../../components/Main/index.jsx";
 import "./style.css";
-import { Card, Button, Carousel, Row, Col } from "react-bootstrap";
+import { Card, Button, Carousel, Row, Col, Container } from "react-bootstrap";
 import jspdf from "jspdf";
 import html2canvas from "html2canvas";
 
+
 const YourCards = () => {
-  // const cardArray = JSON.parse(localStorage.getItem("saveCardArray"));
-  // const [cardArray, setCardArray] = useState(
-  //   JSON.parse(localStorage.getItem("saveCardArray"))
-  // );
-const [cardArray, setCardArray]=useState([])
+  
+  const [cardArray, setCardArray] = useState([]);
+    const oldArray=JSON.parse(localStorage.getItem("saveCardArray"))
+
 
   useEffect(()=>{
-    const oldArray=JSON.parse(localStorage.getItem("saveCardArray"))
     const reverseArray=oldArray.reverse()
     setCardArray(reverseArray)
-  })
+  },[])
 
   console.log(cardArray);
   const [index, setIndex] = useState(0);
@@ -66,36 +65,36 @@ const [cardArray, setCardArray]=useState([])
   //   document.getElementById("root").removeChild(iframe);
   // };
 
-//   const getHtmlString = (event) => {
-//     const htmlFrame = `<!DOCTYPE html>
-//   <html lang="en">
-// <head>
-//     <meta charset="UTF-8">
-//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//     <title>Your Cards</title>
-// </head>
-// <style>
-// .picture-div {
-//   position: relative;
-// }
-// #text-box {
-//   position: absolute;
-// }
-// .card-img{
-//   width: 1000px
-// }
+  //   const getHtmlString = (event) => {
+  //     const htmlFrame = `<!DOCTYPE html>
+  //   <html lang="en">
+  // <head>
+  //     <meta charset="UTF-8">
+  //     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  //     <title>Your Cards</title>
+  // </head>
+  // <style>
+  // .picture-div {
+  //   position: relative;
+  // }
+  // #text-box {
+  //   position: absolute;
+  // }
+  // .card-img{
+  //   width: 1000px
+  // }
 
-// </style>
-// <body style="width:2000px">`;
+  // </style>
+  // <body style="width:2000px">`;
 
-// const htmlEnd = `</body>
-// </html>`;
+  // const htmlEnd = `</body>
+  // </html>`;
 
-//     const htmlString = event.target.parentNode.childNodes[0].innerHTML;
-//     // htmlStringToPdf(htmlString)
-//     const result=htmlFrame+htmlString+htmlEnd
-//     htmlStringToPdf(result)
-//   };
+  //     const htmlString = event.target.parentNode.childNodes[0].innerHTML;
+  //     // htmlStringToPdf(htmlString)
+  //     const result=htmlFrame+htmlString+htmlEnd
+  //     htmlStringToPdf(result)
+  //   };
 
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
@@ -111,22 +110,22 @@ const [cardArray, setCardArray]=useState([])
   };
 
   return (
-    <>
+    <Container fluid="sm" >
       <Row>
         <Col lg={12}>
           <h2>Your Cards</h2>
         </Col>
       </Row>
       <Row>
-        <Col lg={2}></Col>
+        <Col lg={2} sm={0} xs={0} ></Col>
 
-        <Col lg={8}>
+        <Col lg={8} sm={12} xs={12} >
           {cardArray.length > 0 ? (
             <Carousel
               activeIndex={index}
               onSelect={handleSelect}
               indicators={false}
-              style={{ width: "50em", margin: "10px auto" }}
+              // style={{ width: "50em", margin: "10px auto" }}
             >
               {cardArray.map((card) => (
                 <Carousel.Item key={card.id}>
@@ -197,9 +196,9 @@ const [cardArray, setCardArray]=useState([])
             <h1>No images found</h1>
           )}
         </Col>
-        <Col lg={2}></Col>
+        <Col lg={2}sm={0} xs={0}></Col>
       </Row>
-    </>
+    </Container>
   );
 };
 export default YourCards;
