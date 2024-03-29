@@ -1,5 +1,5 @@
 import "./style.css";
-
+// add a box around the title, add bold weigh to logo
 const Header = () => {
   return (
     <header>
