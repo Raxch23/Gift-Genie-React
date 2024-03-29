@@ -26,9 +26,8 @@ const CardGenerator = () => {
     a: "1",
   });
 
-  const [position, setPosition] = useState({ x: 40, y: 40 });
-  const [leftPosition, setLeftPosition] = useState(40);
-  const [topPosition, setTopPosition] = useState(40);
+  // const [position, setPosition] = useState({ x: 40, y: 40 });
+
 
   const [styleData, setStyleData] = useState({
     font: "",
@@ -95,7 +94,6 @@ const CardGenerator = () => {
     });
   };
   const moveMessage = (event) => {
-    // const { name, value } = event.target;
     const name = event.target.getAttribute("data-name");
     const oldNum = parseInt(event.target.value);
     console.log(oldNum);
@@ -129,7 +127,6 @@ const CardGenerator = () => {
   const handleStyleChange = (event) => {
     const { name, value } = event.target;
     setStyleData({ ...styleData, [name]: value });
-    console.log(styleData);
     // setSelectedFont(styleData.font);
     // document.querySelector(".card-text").style.setProperty("--fontFamily",selectedFont)
   };
@@ -167,17 +164,19 @@ const CardGenerator = () => {
       message: formData.message,
       pid,
       imgSRC: singlePicture,
-      font: styleData.font,
+      font: styleData.fontFamily,
       fontColor: styleData.fontColor,
       fontSize: styleData.fontSize,
       position: {
-        x: position.x,
-        y: position.y,
+        x: styleData.position.x,
+        y: styleData.position.y,
       },
       id: uuidv4(),
     };
     saveCardArray.push(finalCard);
-    setSaveCardArray(saveCardArray);
+    const orderedArray=saveCardArray.reverse()
+    setSaveCardArray(orderedArray);
+    console.log(saveCardArray)
     localStorage.setItem("saveCardArray", JSON.stringify(saveCardArray));
 
     setFormData({
