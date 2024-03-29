@@ -13,13 +13,7 @@ import "./style.css";
 import { SketchPicker } from "react-color";
 import RangeSlider from "react-bootstrap-range-slider";
 import { v4 as uuidv4 } from "uuid";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowRight,
-  faArrowLeft,
-  faArrowUp,
-  faArrowDown,
-} from "@fortawesome/free-solid-svg-icons";
+import { parse } from "dotenv";
 
 const CardGenerator = () => {
   const pid = localStorage.getItem("currentImage");
@@ -32,29 +26,21 @@ const CardGenerator = () => {
     a: "1",
   });
 
+  const [position, setPosition] = useState({ x: 40, y: 40 });
+  const [leftPosition, setLeftPosition] = useState(40);
+  const [topPosition, setTopPosition] = useState(40);
+
   const [styleData, setStyleData] = useState({
     font: "",
     fontColor: "",
     fontSize: "1" + "em",
     fontFamily: "Georgia",
+    position: { x: 40, y: 40 },
   });
 
-  const [leftPosition, setLeftPosition] = useState(40);
-  const [topPosition, setTopPosition] = useState(40);
+  const [validated] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
-  const [position, setPosition] = useState({ x: 40, y: 40 });
-  const styles = {
-    h5: {
-      fontFamily: styleData.fontFamily,
-      fontSize: styleData.fontSize + "em",
-      color: styleData.fontColor,
-    },
-
-    textBox: {
-      left: position.x + "%",
-      top: position.y + "%",
-    },
-  };
   const [formData, setFormData] = useState({
     recipient_name: "",
     recipient_email: "",
@@ -63,21 +49,24 @@ const CardGenerator = () => {
     message: "",
   });
 
-  const [validated] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-
   const [cardObject, setCardObject] = useState({});
   const [saveCardArray, setSaveCardArray] = useState(
     JSON.parse(localStorage.getItem("saveCardArray")) || []
   );
 
-  //   if (error) {
-  //     setShowAlert(true);
-  //   } else {
-  //     setShowAlert(false);
-  //   }
-  // }, [error]);
+  const styles = {
+    h5: {
+      fontFamily: styleData.fontFamily,
+      fontSize: styleData.fontSize + "em",
+      color: styleData.fontColor,
+    },
 
+    textBox: {
+      left: styleData.position.x + "%",
+      top: styleData.position.y + "%",
+    },
+  };
+  // works/tested
   const getSingleImage = async () => {
     try {
       const response = await pexelsApi.get("/v1/photos/" + pid);
@@ -96,6 +85,7 @@ const CardGenerator = () => {
     setSelectedColor(
       `rgba(${sketchPickerColor.r},${sketchPickerColor.g},${sketchPickerColor.b},${sketchPickerColor.a})`
     );
+
     setStyleData({ ...styleData, ["fontColor"]: selectedColor });
     setSketchPickerColor({
       r: event.rgb.r.toString(),
@@ -103,39 +93,37 @@ const CardGenerator = () => {
       b: event.rgb.b.toString(),
       a: event.rgb.a.toString(),
     });
-
-    console.log(styleData);
   };
   const moveMessage = (event) => {
     // const { name, value } = event.target;
     const name = event.target.getAttribute("data-name");
-    const startNum = event.target.value;
-    console.log(startNum);
-    console.log(name);
+    const oldNum = parseInt(event.target.value);
+    console.log(oldNum);
     if (name === "left") {
-      setLeftPosition(startNum - 1);
-      setPosition({ ...position, x: leftPosition });
+      setStyleData({ ...styleData, position: { x: oldNum - 1, y:styleData.position.y } });
     }
-
     if (name === "right") {
-      setLeftPosition(position.x + 1);
-      setPosition({ ...position, x: leftPosition });
+      setStyleData({
+        ...styleData,
+        position: { x: oldNum + 1, y: styleData.position.y },
+      });
+      console.log(styleData);
     }
 
     if (name === "top") {
-      setTopPosition(position.y - 1);
-      setPosition({ ...position, y: topPosition });
+      setStyleData({
+        ...styleData,
+        position: { x:styleData.position.x, y: oldNum - 1 },
+      });
     }
 
     if (name === "bottom") {
-      setTopPosition(position.y + 1);
-      setPosition({ ...position, y: topPosition });
+      setStyleData({
+        ...styleData,
+        position: { x:styleData.position.x, y: oldNum + 1 },
+      });
     }
-
-    setPosition({ x: leftPosition, y: topPosition });
-    // console.log(position);
-    // console.log(leftPosition);
-    // console.log(topPosition);
+    console.log(styleData.position)
   };
 
   const handleStyleChange = (event) => {
@@ -385,7 +373,7 @@ const CardGenerator = () => {
                       type="button"
                       onClick={moveMessage}
                       data-name="left"
-                      value={position.x}
+                      value={styleData.position.x}
                       name="left"
                     >
                       Left
@@ -394,7 +382,7 @@ const CardGenerator = () => {
                       type="button"
                       onClick={moveMessage}
                       data-name="top"
-                      value={position.y}
+                      value={styleData.position.y}
                       name="top"
                     >
                       Up
@@ -403,7 +391,7 @@ const CardGenerator = () => {
                       type="button"
                       onClick={moveMessage}
                       data-name="right"
-                      value={position.x}
+                      value={styleData.position.x}
                       name="right"
                     >
                       Right
@@ -412,10 +400,10 @@ const CardGenerator = () => {
                       type="button"
                       onClick={moveMessage}
                       data-name="bottom"
-                      value={position.y}
+                      value={styleData.position.y}
                       name="bottom"
                     >
-                      Bottom
+                      Down
                     </Button>
                   </ButtonGroup>
                 </div>
