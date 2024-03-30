@@ -5,7 +5,7 @@ const Header = () => {
     <header>
       <div >
         <a href="/">
-          <h1>Gift Genie</h1>
+          <h1>Gift Genie Pro</h1>
         </a>
       </div>
     </header>

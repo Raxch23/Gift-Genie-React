@@ -35,11 +35,9 @@ const YourCards = () => {
               activeIndex={index}
               onSelect={handleSelect}
               indicators={false}
-              // style={{ width: "50em", margin: "10px auto" }}
             >
               {cardArray.map((card) => (
                 <Carousel.Item key={card.id}>
-                  {/* <img src={card.imgSRC}/> */}
                   <Card id="parent" className="card-container">
                     <Card.Body>
                       <div
@@ -59,7 +57,6 @@ const YourCards = () => {
                         >
                           <h5
                             className="card-text"
-                            // style={styles.h5}
                             id="to-name"
                           >
                             {" "}
@@ -67,14 +64,12 @@ const YourCards = () => {
                           </h5>
                           <h5
                             className="card-text"
-                            // style={styles.h5}
                             id="card-message"
                           >
                             {card.message}
                           </h5>
                           <h5
                             className="card-text"
-                            // style={styles.h5}
                             id="from-name"
                           >
                             {" "}
@@ -93,9 +88,7 @@ const YourCards = () => {
                   >
                     Delete
                   </Button>
-                  {/* <Button type="button" className="m-1" onClick={getHtmlString}>
-                    Print
-                  </Button> */}
+
                   <Button type="button" className="m-1">
                     Send
                   </Button>

@@ -1,16 +1,9 @@
-/* #picture-div {
-    border: 3px solid green;
-    padding: 0;
-    position: relative;
-} */
+
 
 #parent {
   padding: 0;
 }
 
-/* .col-8{
-    height: 100vh;
-} */
 #style-card {
   width: 80%;
 }
@@ -26,14 +19,3 @@
   padding: 0;
 }
 
-/* .card-img{
-    border: 2px solid purple;
-    position: absolute;
-    top: 0;
-    left: 0;
-} */
-
-/* .card-body img {
-    width: 75%;
-    height: auto;
-} */
