@@ -28,7 +28,6 @@ const CardGenerator = () => {
 
   // const [position, setPosition] = useState({ x: 40, y: 40 });
 
-
   const [styleData, setStyleData] = useState({
     font: "",
     fontColor: "",
@@ -98,7 +97,10 @@ const CardGenerator = () => {
     const oldNum = parseInt(event.target.value);
     console.log(oldNum);
     if (name === "left") {
-      setStyleData({ ...styleData, position: { x: oldNum - 1, y:styleData.position.y } });
+      setStyleData({
+        ...styleData,
+        position: { x: oldNum - 1, y: styleData.position.y },
+      });
     }
     if (name === "right") {
       setStyleData({
@@ -111,17 +113,17 @@ const CardGenerator = () => {
     if (name === "top") {
       setStyleData({
         ...styleData,
-        position: { x:styleData.position.x, y: oldNum - 1 },
+        position: { x: styleData.position.x, y: oldNum - 1 },
       });
     }
 
     if (name === "bottom") {
       setStyleData({
         ...styleData,
-        position: { x:styleData.position.x, y: oldNum + 1 },
+        position: { x: styleData.position.x, y: oldNum + 1 },
       });
     }
-    console.log(styleData.position)
+    console.log(styleData.position);
   };
 
   const handleStyleChange = (event) => {
@@ -174,9 +176,9 @@ const CardGenerator = () => {
       id: uuidv4(),
     };
     saveCardArray.push(finalCard);
-    const orderedArray=saveCardArray.reverse()
+    const orderedArray = saveCardArray.reverse();
     setSaveCardArray(orderedArray);
-    console.log(saveCardArray)
+    console.log(saveCardArray);
     localStorage.setItem("saveCardArray", JSON.stringify(saveCardArray));
 
     setFormData({
@@ -192,7 +194,6 @@ const CardGenerator = () => {
 
   return (
     <>
-      <Row style={{ maxWidth: "1500px", marginTop: "1em" }}></Row>
       <Row
         style={{
           maxWidth: "1500px",
@@ -200,7 +201,7 @@ const CardGenerator = () => {
           marginLeft: "3em",
         }}
       >
-        <Col lg={4}>
+        <Col sm={10} md={9} lg={9} xl={5} xxl={5} style={{ margin: "0 auto" }}>
           <Form
             noValidate
             validated={validated}
@@ -312,114 +313,123 @@ const CardGenerator = () => {
           <Card id="style-card" style={{ width: "100%", display: "none" }}>
             <Form onSubmit={handleImageSave}>
               <div style={{ display: "flex", justifyContent: "space-around" }}>
-                <div style={{ width: "40%" }}>
-                  <div>
-                    <Row>
+                <div style={{ width: "100%" }}>
+                  <Row>
+                    <Col sm={12} md={12} lg={12} xl={12} xxl={12}>
                       <h3>Style your Card</h3>
-                    </Row>
-                  </div>
-                  <Form.Label>Select Your Font</Form.Label>
+                    </Col>
+                  </Row>
 
-                  <Form.Select
-                    name="fontFamily"
-                    onChange={handleStyleChange}
-                    aria-label="Select Font"
-                  >
-                    <option value='"Georgia","Times New Roman", Times, serif'>
-                      Georgia
-                    </option>
-                    <option value="Tangerine, cursive">Tangerine</option>
-                    <option value='"Notable", sans-serif'>Notable</option>
-                    <option value='"Lobster", cursive'>Lobster</option>
-                  </Form.Select>
-                </div>
-                <div style={{ width: "40%" }}>
-                  <Form.Label>Font Size</Form.Label>
+                  <Row style={{ width: "100%" }}>
+                    <Col sm={12} md={12} lg={6} xl={6} xxl={6}>
+                      <Form.Label>Select Your Font</Form.Label>
 
-                  <RangeSlider
-                    min={1.0}
-                    max={1.4}
-                    step={0.1}
-                    value={styleData.fontSize}
-                    name="fontSize"
-                    onChange={handleStyleChange}
-                  />
+                      <Form.Select
+                        name="fontFamily"
+                        onChange={handleStyleChange}
+                        aria-label="Select Font"
+                      >
+                        <option value='"Georgia","Times New Roman", Times, serif'>
+                          Georgia
+                        </option>
+                        <option value="Tangerine, cursive">Tangerine</option>
+                        <option value='"Notable", sans-serif'>Notable</option>
+                        <option value='"Lobster", cursive'>Lobster</option>
+                      </Form.Select>
+                    </Col>
+                    <Col sm={12} md={12} lg={6} xl={6} xxl={6}>
+                      <Form.Label>Font Size</Form.Label>
+
+                      <RangeSlider
+                        min={1.0}
+                        max={1.4}
+                        step={0.1}
+                        value={styleData.fontSize}
+                        name="fontSize"
+                        onChange={handleStyleChange}
+                      />
+                    </Col>
+                  </Row>
                 </div>
               </div>
-              <div
+              <Row
                 style={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  justifyContent: "space-around",
                   marginTop: "2em",
                 }}
               >
-                <div
+                <Col
+                  sm={10}
+                  md={8}
+                  lg={5}
+                  xl={5}
+                  xxl={5}
                   style={{
                     margin: "2em",
-                    display: "flex",
-                    flexDirection: "column",
                   }}
                 >
-                  <Form.Label>Position your Message</Form.Label>
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <Form.Label>Position your Message</Form.Label>
 
-                  <ButtonGroup
-                    style={{
-                      height: "fit-content",
-                    }}
-                  >
-                    <Button
-                      type="button"
-                      onClick={moveMessage}
-                      data-name="left"
-                      value={styleData.position.x}
-                      name="left"
+                    <ButtonGroup
+                      style={{
+                        height: "fit-content",
+                      }}
                     >
-                      Left
-                    </Button>
-                    <Button
-                      type="button"
-                      onClick={moveMessage}
-                      data-name="top"
-                      value={styleData.position.y}
-                      name="top"
-                    >
-                      Up
-                    </Button>
-                    <Button
-                      type="button"
-                      onClick={moveMessage}
-                      data-name="right"
-                      value={styleData.position.x}
-                      name="right"
-                    >
-                      Right
-                    </Button>
-                    <Button
-                      type="button"
-                      onClick={moveMessage}
-                      data-name="bottom"
-                      value={styleData.position.y}
-                      name="bottom"
-                    >
-                      Down
-                    </Button>
-                  </ButtonGroup>
-                </div>
-                <Form.Control
-                  type="hidden"
-                  id="exampleColorInput"
-                  value={styleData.fontColor}
-                  name="fontColor"
-                  onChange={handleStyleChange}
-                />
+                      <Button
+                        type="button"
+                        onClick={moveMessage}
+                        data-name="left"
+                        value={styleData.position.x}
+                        name="left"
+                      >
+                        Left
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={moveMessage}
+                        data-name="top"
+                        value={styleData.position.y}
+                        name="top"
+                      >
+                        Up
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={moveMessage}
+                        data-name="right"
+                        value={styleData.position.x}
+                        name="right"
+                      >
+                        Right
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={moveMessage}
+                        data-name="bottom"
+                        value={styleData.position.y}
+                        name="bottom"
+                      >
+                        Down
+                      </Button>
+                    </ButtonGroup>
+                  </div>
+                </Col>
+                <Col sm={10} md={6} lg={5} xl={5} xxl={5}>
+                  <Form.Control
+                    type="hidden"
+                    id="exampleColorInput"
+                    value={styleData.fontColor}
+                    name="fontColor"
+                    onChange={handleStyleChange}
+                  />
 
-                <SketchPicker
-                  onChange={(e) => handleColorChange(e)}
-                  color={sketchPickerColor}
-                  value={sketchPickerColor}
-                />
-              </div>
+                  <SketchPicker
+                    onChange={(e) => handleColorChange(e)}
+                    color={sketchPickerColor}
+                    value={sketchPickerColor}
+                  />
+                </Col>
+              </Row>
 
               <div>
                 <Button
@@ -435,7 +445,7 @@ const CardGenerator = () => {
             </Form>
           </Card>
         </Col>
-        <Col lg={7}>
+        <Col sm={12} md={12} lg={12} xl={7} xxl={7}>
           <Row>
             <Col lg={1}></Col>
 
