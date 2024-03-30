@@ -19,7 +19,9 @@ Gift Genie Pro is a web platform that simplifies creating personalised gift card
 ![alt text](<Large GIF (1264x726).gif>)
 
 # Usage
-Welcome to GGift Genie Pro! Busy individuals can generate a perfect gift card for their loved ones. When a user searches for any keyword or theme, my browser would enable them to generate a picture according to their input. They are also able to add a customisable message to the generated card. This convenient way to create personalised cards for any occasion would take the stress out of last-minute shopping and, also allow users a more personalised feel to their cards! I have added more interactive options such as the option to select different fonts and font sizes. User (s) can now add colours of their choosing to their messages, and positioned thier message however they choose whether, they want it on the (left,right,down or up). Using Pexels API, the user(s) now have more than 50 images to choose from once they input a keyword of their choosing. They can navigate the image options using pagination which gives them an option of 8 pages in total.
+Welcome to GGift Genie Pro! Busy individuals can generate a perfect gift card for their loved ones. When a user searches for any keyword or theme, my browser would enable them to generate a picture according to their input. They are also able to add a customisable message to the generated card. This convenient way to create personalised cards for any occasion would take the stress out of last-minute shopping and, also allow users a more personalised feel to their cards!
+
+I have added more interactive options such as the option to select different fonts and font sizes. User (s) can now add colours of their choosing to their messages, and positioned thier message however they choose whether, they want it on the (left,right,down or up). Using Pexels API, the user(s) now have more than 50 images to choose from once they input a keyword of their choosing. They can navigate the image options using pagination which gives them an option of 8 pages in total.
 
 
  **Follow the below steps to generate yourself a gift, get well or a congratulation card(s)**!
