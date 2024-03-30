@@ -44,6 +44,7 @@ I have added more interactive options such as the option to select different fon
 ![alt text](<Small GIF (400x230).gif>)
 
 6. **To start over, all you need to is click on "gift genie Pro Logo"  or click on the "start over" button on the *yourCards* page and you'll be taken back to the first page.**
+
 ![alt text](<Screenshot 2024-03-30 at 01.23.08.png>)
 
 # Deployed Site
